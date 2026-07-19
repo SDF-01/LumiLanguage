@@ -50,12 +50,12 @@ export function createKanaLineUnit(options: {
     tutorial: {
       title: `${lineKey} line`,
       titleJa,
-      bodyEn: `Learn the ${script} ${lineKey} line: read → write → speak → listen. Characters: ${chars
-        .map((c) => `${c.kana} (${c.romaji})`)
-        .join(", ")}.`,
-      bodyJa: `${titleJa}を、読む→書く→話す→聞くの順で。文字：${chars
-        .map((c) => `${c.kana}（${c.romaji}）`)
-        .join("、")}。`,
+      bodyEn: `This lesson is the ${scriptLabel} ${lineKey} row. Memorize these shapes and sounds: ${chars
+        .map((c) => `${c.kana} = ${c.romaji}`)
+        .join(", ")}. Practice in order: read the romaji and pick the kana, write by choosing the form, speak it aloud, then listen and select what you hear.`,
+      bodyJa: `このレッスンは${titleJa}です。覚える文字と音：${chars
+        .map((c) => `${c.kana}＝${c.romaji}`)
+        .join("、")}。順番は読む（ローマ字→かな）→書く（形を選ぶ）→話す→聞くです。`,
       tips: [
         "Review the previous line for 2 minutes first",
         "Say romaji, then look at the kana",

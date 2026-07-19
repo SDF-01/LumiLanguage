@@ -12,7 +12,8 @@ import { recordExamScore } from "@/lib/progress";
 import { practicePercentToBandHint } from "@/lib/scoring";
 import type { TtsLang } from "@/lib/tts";
 
-const SECONDS = 150;
+const SECONDS = 180;
+const EXAM_ITEMS = 12;
 
 function shuffle<T>(items: T[]): T[] {
   const copy = [...items];
@@ -24,7 +25,10 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 export function ExamPlayer() {
-  const pool = useMemo(() => shuffle(getExamPool()).slice(0, 8), []);
+  const pool = useMemo(
+    () => shuffle(getExamPool()).slice(0, EXAM_ITEMS),
+    [],
+  );
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [done, setDone] = useState(false);

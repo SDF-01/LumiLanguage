@@ -10,9 +10,9 @@ const en: Dictionary = {
   },
   home: {
     toeicLine:
-      "Train for the real TOEIC Listening and Reading test, with a clear path toward 800+.",
+      "One playful path for TOEIC 800+ and Japanese from zero.",
     japaneseLine:
-      "Start Japanese from zero: sounds and scripts first, then hiragana, katakana, kanji, and phrases. Each lesson builds read, write, speak, listen.",
+      "Train Listening and Reading for the real exam, then build Japanese from first sounds to kana, kanji, and phrases.",
     startLearning: "Start learning",
     quickQuiz: "Quick practice quiz",
   },
@@ -63,10 +63,9 @@ const ja: Dictionary = {
     language: "言語",
   },
   home: {
-    toeicLine:
-      "本番のTOEIC Listening & Readingに向けて、800点突破への明確な学習ルートを用意しています。",
+    toeicLine: "TOEIC 800点と日本語ゼロからの道を、ひとつで。",
     japaneseLine:
-      "ゼロから日本語：まず音と文字体系、そのあとひらがな・カタカナ・漢字・フレーズへ。毎回「読む→書く→話す→聞く」です。",
+      "本番のListening & Readingを鍛えつつ、音から仮名・漢字・フレーズまで日本語も学べます。",
     startLearning: "学習をはじめる",
     quickQuiz: "かんたん練習クイズ",
   },

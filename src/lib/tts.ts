@@ -1,7 +1,6 @@
 import {
   DEFAULT_VOICE,
   VOICE_CHARACTERS,
-  defaultVoiceForLang,
   toPiperLanguage,
   type TtsLang,
   type VoiceCharacterId,
@@ -13,6 +12,9 @@ export {
   DEFAULT_VOICE,
   listVoiceCharacters,
 } from "@/lib/tts-voices";
+
+/** Learner-friendly pace (slower than 1.0). */
+export const DEFAULT_SPEECH_RATE = 0.72;
 
 type PiperAudio = {
   play: () => Promise<void>;
@@ -37,6 +39,7 @@ type LoadState =
 let engine: "piper" | "webspeech" | null = null;
 let loadState: LoadState = { status: "idle" };
 let activeAudio: { stop?: () => void } | null = null;
+let speakGeneration = 0;
 const piperByModel = new Map<string, Promise<PiperInstance>>();
 let preferredVoice: VoiceCharacterId = DEFAULT_VOICE;
 const listeners = new Set<(state: LoadState) => void>();
@@ -85,6 +88,7 @@ export function unlockAudio(): void {
 }
 
 export function stopSpeech(): void {
+  speakGeneration += 1;
   if (typeof window !== "undefined" && "speechSynthesis" in window) {
     window.speechSynthesis.cancel();
   }
@@ -169,10 +173,33 @@ async function getPiper(model: string): Promise<PiperInstance> {
   return promise;
 }
 
+function pickFemaleVoice(
+  voices: SpeechSynthesisVoice[],
+  lang: TtsLang,
+): SpeechSynthesisVoice | null {
+  const prefix = lang.slice(0, 2).toLowerCase();
+  const pool = voices.filter((v) => v.lang.toLowerCase().startsWith(prefix));
+  const ranked = pool.length > 0 ? pool : voices;
+
+  const femaleHints =
+    /female|woman|girl|nanami|ayumi|haruka|kyoko|zira|samantha|victoria|karen|moira|tessa|fiona|susan|linda|heami|yuna|google 日本語|google us english|microsoft haruka|microsoft ayumi|microsoft nanami/i;
+  const maleHints =
+    /male|man|boy|david|mark|george|daniel|james|ichiro|hayato|microsoft ichiro|microsoft hayato/i;
+
+  const female = ranked.find((v) => femaleHints.test(v.name));
+  if (female) return female;
+
+  const nonMale = ranked.find((v) => !maleHints.test(v.name));
+  if (nonMale) return nonMale;
+
+  return ranked[0] ?? null;
+}
+
 function speakWebSpeech(
   text: string,
   lang: TtsLang,
-  rate = 0.95,
+  rate: number,
+  generation: number,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -186,29 +213,34 @@ function speakWebSpeech(
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = lang;
     utter.rate = rate;
-
-    const pickVoice = () => {
-      const voices = synth.getVoices();
-      const exact = voices.find((v) => v.lang === lang);
-      if (exact) return exact;
-      const prefix = lang.slice(0, 2);
-      return voices.find((v) => v.lang.startsWith(prefix)) ?? null;
-    };
+    utter.pitch = 1.05;
 
     const start = () => {
-      const voice = pickVoice();
+      if (generation !== speakGeneration) {
+        resolve();
+        return;
+      }
+      const voice = pickFemaleVoice(synth.getVoices(), lang);
       if (voice) utter.voice = voice;
-      const keepAlive = window.setInterval(() => {
-        if (synth.speaking) synth.resume();
-      }, 5000);
+
       utter.onend = () => {
-        window.clearInterval(keepAlive);
+        if (generation === speakGeneration) activeAudio = null;
         resolve();
       };
       utter.onerror = () => {
-        window.clearInterval(keepAlive);
+        if (generation === speakGeneration) activeAudio = null;
         reject(new Error("Speech failed"));
       };
+
+      activeAudio = {
+        stop: () => {
+          synth.cancel();
+          activeAudio = null;
+          resolve();
+        },
+      };
+
+      engine = "webspeech";
       synth.speak(utter);
     };
 
@@ -225,15 +257,57 @@ function speakWebSpeech(
     } else {
       start();
     }
+  });
+}
 
-    engine = "webspeech";
+async function playPiperBlob(
+  blob: Blob,
+  generation: number,
+): Promise<void> {
+  const url = URL.createObjectURL(blob);
+  const el = new Audio(url);
+  el.preload = "auto";
+
+  await new Promise<void>((resolve, reject) => {
+    if (generation !== speakGeneration) {
+      URL.revokeObjectURL(url);
+      resolve();
+      return;
+    }
+
+    activeAudio = {
+      stop: () => {
+        el.pause();
+        el.removeAttribute("src");
+        URL.revokeObjectURL(url);
+        activeAudio = null;
+        resolve();
+      },
+    };
+
+    el.onended = () => {
+      URL.revokeObjectURL(url);
+      if (generation === speakGeneration) activeAudio = null;
+      resolve();
+    };
+    el.onerror = () => {
+      URL.revokeObjectURL(url);
+      if (generation === speakGeneration) activeAudio = null;
+      reject(new Error("Audio playback failed"));
+    };
+
+    void el.play().catch((err) => {
+      URL.revokeObjectURL(url);
+      if (generation === speakGeneration) activeAudio = null;
+      reject(err);
+    });
   });
 }
 
 export async function speak(
   text: string,
   lang: TtsLang = "en-US",
-  rate = 0.95,
+  rate = DEFAULT_SPEECH_RATE,
   voiceId?: VoiceCharacterId,
 ): Promise<void> {
   if (!text.trim()) return;
@@ -243,45 +317,34 @@ export async function speak(
 
   unlockAudio();
   stopSpeech();
+  const generation = speakGeneration;
 
-  const characterId = voiceId ?? preferredVoice ?? defaultVoiceForLang(lang);
-  const character = VOICE_CHARACTERS[characterId] ?? VOICE_CHARACTERS.lumi;
+  // Always use the warm female tutor voice (Lumi / Tsukuyomi-chan).
+  preferredVoice = "lumi";
+  void voiceId;
+  const character = VOICE_CHARACTERS.lumi;
   const piperLang = toPiperLanguage(lang);
-  const lengthScale = Math.max(0.7, Math.min(1.4, 1 / rate));
+  // piper lengthScale > 1 = slower speech
+  const lengthScale = Math.max(1.15, Math.min(1.55, 1 / rate));
 
   try {
     const piper = await getPiper(character.model);
+    if (generation !== speakGeneration) return;
+
     const result = await piper.synthesize(text, {
       language: piperLang,
       lengthScale,
     });
+    if (generation !== speakGeneration) return;
 
-    const url = URL.createObjectURL(result.toBlob());
-    const el = new Audio(url);
-    await new Promise<void>((resolve, reject) => {
-      activeAudio = {
-        stop: () => {
-          el.pause();
-          el.removeAttribute("src");
-          URL.revokeObjectURL(url);
-          resolve();
-        },
-      };
-      el.onended = () => {
-        URL.revokeObjectURL(url);
-        activeAudio = null;
-        resolve();
-      };
-      el.onerror = () => {
-        URL.revokeObjectURL(url);
-        activeAudio = null;
-        reject(new Error("Audio playback failed"));
-      };
-      void el.play().catch(reject);
-    });
+    // Use blob playback only (do not also call result.play()).
+    engine = "piper";
+    await playPiperBlob(result.toBlob(), generation);
     return;
   } catch {
-    await speakWebSpeech(text, lang, rate);
+    if (generation !== speakGeneration) return;
+    // Single fallback engine — female system voice only.
+    await speakWebSpeech(text, lang, rate, generation);
   }
 }
 
@@ -292,6 +355,6 @@ export function getActiveTtsEngine(): "piper" | "webspeech" | null {
 export async function preloadTts(
   voiceId: VoiceCharacterId = DEFAULT_VOICE,
 ): Promise<void> {
-  const character = VOICE_CHARACTERS[voiceId];
+  const character = VOICE_CHARACTERS[voiceId] ?? VOICE_CHARACTERS.lumi;
   await getPiper(character.model);
 }

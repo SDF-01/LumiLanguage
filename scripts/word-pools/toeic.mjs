@@ -1,3 +1,5 @@
+import { glossFor } from "./toeic-meanings.mjs";
+
 const BASE = `
 deadline,agenda,invoice,memo,itinerary,delay,destination,confirm,available,reschedule,
 brochure,courier,refund,receipt,approximately,announce,regarding,attached,convenient,shortage,
@@ -323,15 +325,16 @@ export function buildToeic(need, blockedMeanings = new Set()) {
     if (pad > 20000) break;
   }
 
-  return words.map((word, i) => ({
-    id: `t-${i}`,
-    word,
-    meaningEn: `Workplace English: ${word}`,
-    explanationEn:
-      "High-frequency TOEIC business English. Say it aloud, then use it in a short work sentence.",
-    explanationJa:
-      "TOEIC Listening & Readingでよく出る表現です。意味を確認し、声に出して短い仕事の文で使いましょう。",
-    ttsText: word,
-    ttsLang: "en-US",
-  }));
+  return words.map((word, i) => {
+    const g = glossFor(word);
+    return {
+      id: `t-${i}`,
+      word,
+      meaningEn: g.meaningEn,
+      explanationEn: g.explanationEn,
+      explanationJa: g.explanationJa,
+      ttsText: word,
+      ttsLang: "en-US",
+    };
+  });
 }

@@ -102,5 +102,91 @@ export const toeicPart6Unit: LearningUnit = {
       explanationEn: "With 'you', use 'have' in the present conditional.",
       explanationJa: "you には have を使います。",
     },
+    {
+      id: "r6-6",
+      kind: "multiple-choice",
+      prompt:
+        "Email: Our warehouse will be closed next Monday for inventory. _______, please place urgent orders by Friday afternoon.",
+      promptJa: "月曜は棚卸しで倉庫休業のため、急ぎの注文は金曜午後までに。",
+      choices: [
+        { id: "a", label: "A) In contrast" },
+        { id: "b", label: "B) For this reason" },
+        { id: "c", label: "C) On the other hand" },
+        { id: "d", label: "D) Even so" },
+      ],
+      correctChoiceId: "b",
+      explanationEn:
+        "'For this reason' links the closure to the request to order early.",
+      explanationJa:
+        "休業という理由から早めの注文を求めるので For this reason が適切です。",
+    },
+    {
+      id: "r6-7",
+      kind: "multiple-choice",
+      prompt:
+        "Notice: Staff who work late may request a taxi voucher. Please ask reception _______ you leave the building.",
+      promptJa: "残業時はタクシー券を申請できます。退館前に受付へ。",
+      choices: [
+        { id: "a", label: "A) before" },
+        { id: "b", label: "B) among" },
+        { id: "c", label: "C) without" },
+        { id: "d", label: "D) against" },
+      ],
+      correctChoiceId: "a",
+      explanationEn: "'Before you leave' correctly marks the time to ask reception.",
+      explanationJa: "退館する前に、という時間関係なので before です。",
+    },
+    {
+      id: "r6-8",
+      kind: "multiple-choice",
+      prompt:
+        "Memo: The training materials _______ last week have been uploaded to the shared drive.",
+      promptJa: "先週___された研修資料は共有ドライブにあります。",
+      choices: [
+        { id: "a", label: "A) revise" },
+        { id: "b", label: "B) revising" },
+        { id: "c", label: "C) revised" },
+        { id: "d", label: "D) revision" },
+      ],
+      correctChoiceId: "c",
+      explanationEn:
+        "A past participle ('revised') modifies 'materials' in a reduced relative clause.",
+      explanationJa:
+        "過去分詞 revised が materials を修飾する分詞構文です。",
+    },
+    {
+      id: "r6-9",
+      kind: "multiple-choice",
+      prompt:
+        "Article: Demand for electric bikes continues to grow. Manufacturers are _______ production to meet orders.",
+      promptJa: "電動自転車の需要が増え、メーカーは生産を___しています。",
+      choices: [
+        { id: "a", label: "A) increase" },
+        { id: "b", label: "B) increasing" },
+        { id: "c", label: "C) increased" },
+        { id: "d", label: "D) increasingly" },
+      ],
+      correctChoiceId: "b",
+      explanationEn:
+        "After 'are' in the present progressive, use the -ing form: increasing.",
+      explanationJa:
+        "are のあとの進行形には increasing が必要です。",
+    },
+    {
+      id: "r6-10",
+      kind: "multiple-choice",
+      prompt:
+        "Email: Please find attached the agenda for Thursday. Kindly review it and send _______ comments by Wednesday.",
+      promptJa: "木曜の議題を添付しました。水曜までにコメントを送ってください。",
+      choices: [
+        { id: "a", label: "A) you" },
+        { id: "b", label: "B) your" },
+        { id: "c", label: "C) yours" },
+        { id: "d", label: "D) yourself" },
+      ],
+      correctChoiceId: "b",
+      explanationEn: "You need a possessive adjective before the noun 'comments': your.",
+      explanationJa: "名詞 comments の前には所有格 your が必要です。",
+    },
   ],
 };

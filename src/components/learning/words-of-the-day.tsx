@@ -4,7 +4,7 @@ import { SoftPanel } from "@/components/brand/soft-panel";
 import { Button } from "@/components/ui/button";
 import type { DailyWord } from "@/lib/daily-words";
 import { formatDailyDateLabel } from "@/lib/daily-words";
-import { speak, type TtsLang } from "@/lib/tts";
+import { DEFAULT_SPEECH_RATE, speak, type TtsLang } from "@/lib/tts";
 import { cn } from "@/lib/utils";
 
 type WordGroup = {
@@ -16,7 +16,7 @@ async function playWord(word: DailyWord) {
   const text = word.ttsText ?? word.word;
   const lang = (word.ttsLang ?? "en-US") as TtsLang;
   try {
-    await speak(text, lang);
+    await speak(text, lang, DEFAULT_SPEECH_RATE, "lumi");
   } catch {
     // TTS optional
   }

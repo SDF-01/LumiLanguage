@@ -14,9 +14,26 @@ import {
   japaneseHiraganaWaUnit,
   japaneseHiraganaYaUnit,
 } from "@/content/japanese/hiragana-lines";
+import {
+  japaneseHiraganaBaUnit,
+  japaneseHiraganaDaUnit,
+  japaneseHiraganaGaUnit,
+  japaneseHiraganaPaUnit,
+  japaneseHiraganaZaUnit,
+} from "@/content/japanese/hiragana-dakuten";
 import { japaneseHiraganaSaUnit } from "@/content/japanese/hiragana-sa";
+import { japaneseHiraganaYouonUnit } from "@/content/japanese/hiragana-youon";
 import { japaneseKanjiBasicsUnit } from "@/content/japanese/kanji-basics";
+import { japaneseKanjiNatureUnit } from "@/content/japanese/kanji-nature";
+import { japaneseKanjiNumbersTimeUnit } from "@/content/japanese/kanji-numbers-time";
 import { japaneseKatakanaAUnit } from "@/content/japanese/katakana-a";
+import {
+  japaneseKatakanaBaUnit,
+  japaneseKatakanaDaUnit,
+  japaneseKatakanaGaUnit,
+  japaneseKatakanaPaUnit,
+  japaneseKatakanaZaUnit,
+} from "@/content/japanese/katakana-dakuten";
 import {
   japaneseKatakanaHaUnit,
   japaneseKatakanaKaUnit,
@@ -66,6 +83,12 @@ const units: LearningUnit[] = [
   japaneseHiraganaYaUnit,
   japaneseHiraganaRaUnit,
   japaneseHiraganaWaUnit,
+  japaneseHiraganaGaUnit,
+  japaneseHiraganaZaUnit,
+  japaneseHiraganaDaUnit,
+  japaneseHiraganaBaUnit,
+  japaneseHiraganaPaUnit,
+  japaneseHiraganaYouonUnit,
   japaneseKatakanaAUnit,
   japaneseKatakanaKaUnit,
   japaneseKatakanaSaUnit,
@@ -76,7 +99,14 @@ const units: LearningUnit[] = [
   japaneseKatakanaYaUnit,
   japaneseKatakanaRaUnit,
   japaneseKatakanaWaUnit,
+  japaneseKatakanaGaUnit,
+  japaneseKatakanaZaUnit,
+  japaneseKatakanaDaUnit,
+  japaneseKatakanaBaUnit,
+  japaneseKatakanaPaUnit,
   japaneseKanjiBasicsUnit,
+  japaneseKanjiNatureUnit,
+  japaneseKanjiNumbersTimeUnit,
   japaneseGreetingsUnit,
   japaneseParticlesUnit,
 ];
@@ -295,6 +325,48 @@ export const japanesePathNodes: PathNode[] = [
     section: "hiragana",
   },
   {
+    id: "H11",
+    label: "Hiragana が行",
+    labelJa: "ひらがな が行（濁音）",
+    unitId: japaneseHiraganaGaUnit.id,
+    section: "hiragana",
+  },
+  {
+    id: "H12",
+    label: "Hiragana ざ行",
+    labelJa: "ひらがな ざ行（濁音）",
+    unitId: japaneseHiraganaZaUnit.id,
+    section: "hiragana",
+  },
+  {
+    id: "H13",
+    label: "Hiragana だ行",
+    labelJa: "ひらがな だ行（濁音）",
+    unitId: japaneseHiraganaDaUnit.id,
+    section: "hiragana",
+  },
+  {
+    id: "H14",
+    label: "Hiragana ば行",
+    labelJa: "ひらがな ば行（濁音）",
+    unitId: japaneseHiraganaBaUnit.id,
+    section: "hiragana",
+  },
+  {
+    id: "H15",
+    label: "Hiragana ぱ行",
+    labelJa: "ひらがな ぱ行（半濁音）",
+    unitId: japaneseHiraganaPaUnit.id,
+    section: "hiragana",
+  },
+  {
+    id: "H16",
+    label: "Hiragana youon",
+    labelJa: "ひらがな 拗音",
+    unitId: japaneseHiraganaYouonUnit.id,
+    section: "hiragana",
+  },
+  {
     id: "K1",
     label: "Katakana ア行",
     labelJa: "カタカナ ア行",
@@ -365,10 +437,59 @@ export const japanesePathNodes: PathNode[] = [
     section: "katakana",
   },
   {
+    id: "K11",
+    label: "Katakana ガ行",
+    labelJa: "カタカナ ガ行（濁音）",
+    unitId: japaneseKatakanaGaUnit.id,
+    section: "katakana",
+  },
+  {
+    id: "K12",
+    label: "Katakana ザ行",
+    labelJa: "カタカナ ザ行（濁音）",
+    unitId: japaneseKatakanaZaUnit.id,
+    section: "katakana",
+  },
+  {
+    id: "K13",
+    label: "Katakana ダ行",
+    labelJa: "カタカナ ダ行（濁音）",
+    unitId: japaneseKatakanaDaUnit.id,
+    section: "katakana",
+  },
+  {
+    id: "K14",
+    label: "Katakana バ行",
+    labelJa: "カタカナ バ行（濁音）",
+    unitId: japaneseKatakanaBaUnit.id,
+    section: "katakana",
+  },
+  {
+    id: "K15",
+    label: "Katakana パ行",
+    labelJa: "カタカナ パ行（半濁音）",
+    unitId: japaneseKatakanaPaUnit.id,
+    section: "katakana",
+  },
+  {
     id: "C1",
     label: "Kanji basics",
     labelJa: "漢字入門",
     unitId: japaneseKanjiBasicsUnit.id,
+    section: "kanji",
+  },
+  {
+    id: "C2",
+    label: "Kanji: nature",
+    labelJa: "漢字：自然",
+    unitId: japaneseKanjiNatureUnit.id,
+    section: "kanji",
+  },
+  {
+    id: "C3",
+    label: "Kanji: numbers and time",
+    labelJa: "漢字：数と時間",
+    unitId: japaneseKanjiNumbersTimeUnit.id,
     section: "kanji",
   },
   {

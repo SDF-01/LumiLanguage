@@ -127,5 +127,93 @@ export const toeicPart5Unit: LearningUnit = {
       explanationJa:
         "neither A nor B では近い方の主語（assistants）に動詞を合わせます。",
     },
+    {
+      id: "r5-7",
+      kind: "multiple-choice",
+      prompt:
+        "The CEO spoke _______ about the company's plans for overseas expansion.",
+      promptJa: "CEOは海外進出計画について___話しました。",
+      choices: [
+        { id: "a", label: "A) enthusiasm" },
+        { id: "b", label: "B) enthusiastic" },
+        { id: "c", label: "C) enthusiastically" },
+        { id: "d", label: "D) enthuse" },
+      ],
+      correctChoiceId: "c",
+      explanationEn:
+        "You need an adverb to modify the verb 'spoke'. 'Enthusiastically' fits.",
+      explanationJa:
+        "動詞 spoke を修飾するには副詞が必要です。enthusiastically が正解です。",
+    },
+    {
+      id: "r5-8",
+      kind: "multiple-choice",
+      prompt:
+        "Employees are encouraged to participate _______ the wellness program.",
+      promptJa: "社員はウェルネスプログラムへの参加を勧められています。",
+      choices: [
+        { id: "a", label: "A) on" },
+        { id: "b", label: "B) in" },
+        { id: "c", label: "C) at" },
+        { id: "d", label: "D) by" },
+      ],
+      correctChoiceId: "b",
+      explanationEn: "The collocation is 'participate in' an activity or program.",
+      explanationJa: "コロケーションは participate in です。",
+    },
+    {
+      id: "r5-9",
+      kind: "multiple-choice",
+      prompt:
+        "The contract will not be valid _______ both parties sign the final page.",
+      promptJa: "双方が最終頁に署名するまで契約は有効になりません。",
+      choices: [
+        { id: "a", label: "A) unless" },
+        { id: "b", label: "B) despite" },
+        { id: "c", label: "C) during" },
+        { id: "d", label: "D) among" },
+      ],
+      correctChoiceId: "a",
+      explanationEn:
+        "'Unless' introduces the condition required for the contract to be valid.",
+      explanationJa:
+        "unless は「〜しない限り」という条件を導きます。",
+    },
+    {
+      id: "r5-10",
+      kind: "multiple-choice",
+      prompt:
+        "After _______ the survey results, the board approved a new pricing plan.",
+      promptJa: "調査結果を___したあと、取締役会は新価格案を承認しました。",
+      choices: [
+        { id: "a", label: "A) review" },
+        { id: "b", label: "B) reviewed" },
+        { id: "c", label: "C) reviewing" },
+        { id: "d", label: "D) reviews" },
+      ],
+      correctChoiceId: "c",
+      explanationEn:
+        "After a preposition like 'after', use a gerund: reviewing.",
+      explanationJa:
+        "前置詞 after のあとは動名詞 reviewing が続きます。",
+    },
+    {
+      id: "r5-11",
+      kind: "multiple-choice",
+      prompt:
+        "The updated manual provides _______ instructions for installing the software.",
+      promptJa: "改訂マニュアルはソフトのインストール手順を___示しています。",
+      choices: [
+        { id: "a", label: "A) clearly" },
+        { id: "b", label: "B) clear" },
+        { id: "c", label: "C) clarity" },
+        { id: "d", label: "D) clearing" },
+      ],
+      correctChoiceId: "b",
+      explanationEn:
+        "You need an adjective to modify the noun 'instructions'. 'Clear' is correct.",
+      explanationJa:
+        "名詞 instructions を修飾するには形容詞 clear が必要です。",
+    },
   ],
 };

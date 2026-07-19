@@ -102,5 +102,85 @@ export const toeicPart7Unit: LearningUnit = {
       explanationEn: "They should RSVP by March 3 if they plan to attend.",
       explanationJa: "出席する場合は3月3日までに返信が必要です。",
     },
+    {
+      id: "r7-6",
+      kind: "multiple-choice",
+      prompt:
+        "Email: 'Parking Lot B will be reserved for vendors on June 12. Employees should use Lot C that day.' Where should employees park on June 12?",
+      promptJa: "6月12日、社員はどこに駐車すべき？",
+      choices: [
+        { id: "a", label: "A) Lot A" },
+        { id: "b", label: "B) Lot B" },
+        { id: "c", label: "C) Lot C" },
+        { id: "d", label: "D) The street only" },
+      ],
+      correctChoiceId: "c",
+      explanationEn: "Employees are told to use Lot C while Lot B is for vendors.",
+      explanationJa: "社員は Lot C を使うよう指示されています。",
+    },
+    {
+      id: "r7-7",
+      kind: "multiple-choice",
+      prompt:
+        "Notice: 'The company store will stop accepting cash next month. Please use cards or mobile pay.' What change is coming?",
+      promptJa: "どんな変更がありますか？",
+      choices: [
+        { id: "a", label: "A) Cash will no longer be accepted" },
+        { id: "b", label: "B) The store will open 24 hours" },
+        { id: "c", label: "C) Prices will double" },
+        { id: "d", label: "D) Only managers may shop there" },
+      ],
+      correctChoiceId: "a",
+      explanationEn: "The notice says cash will stop being accepted next month.",
+      explanationJa: "来月から現金が使えなくなる、とあります。",
+    },
+    {
+      id: "r7-8",
+      kind: "multiple-choice",
+      prompt:
+        "Article: 'Vista Soft delayed its product launch after testers reported login errors. A patched version is expected in August.' Why was the launch delayed?",
+      promptJa: "発売が遅れた理由は？",
+      choices: [
+        { id: "a", label: "A) Testers reported login errors" },
+        { id: "b", label: "B) The factory ran out of boxes" },
+        { id: "c", label: "C) Marketing wanted a longer ad" },
+        { id: "d", label: "D) August is a holiday month" },
+      ],
+      correctChoiceId: "a",
+      explanationEn: "The delay followed tester reports of login errors.",
+      explanationJa: "テスターがログインエラーを報告したため延期です。",
+    },
+    {
+      id: "r7-9",
+      kind: "multiple-choice",
+      prompt:
+        "Memo: 'Interns must complete the safety quiz before using the lab. Certificates are issued the same day.' What must interns do first?",
+      promptJa: "インターンが最初にすべきことは？",
+      choices: [
+        { id: "a", label: "A) Buy lab coats" },
+        { id: "b", label: "B) Complete the safety quiz" },
+        { id: "c", label: "C) Meet the CEO" },
+        { id: "d", label: "D) Book a hotel room" },
+      ],
+      correctChoiceId: "b",
+      explanationEn: "They must complete the safety quiz before using the lab.",
+      explanationJa: "ラボ使用前に安全クイズ完了が必要です。",
+    },
+    {
+      id: "r7-10",
+      kind: "multiple-choice",
+      prompt:
+        "Ad: 'CloudPrint offers same-day banner printing if orders arrive by 11 a.m. Weekend orders ship on Monday.' When must weekday orders arrive for same-day banners?",
+      promptJa: "当日バナー印刷の注文期限は？",
+      choices: [
+        { id: "a", label: "A) By 11 a.m." },
+        { id: "b", label: "B) By 5 p.m." },
+        { id: "c", label: "C) Only on weekends" },
+        { id: "d", label: "D) After Monday shipping" },
+      ],
+      correctChoiceId: "a",
+      explanationEn: "Same-day banner printing requires orders by 11 a.m.",
+      explanationJa: "当日印刷には午前11時までの注文が必要です。",
+    },
   ],
 };

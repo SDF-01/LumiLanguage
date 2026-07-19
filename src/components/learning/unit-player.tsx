@@ -136,8 +136,8 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           </p>
           <p className="text-base text-muted-foreground">
             {unit.pathId === "toeic"
-              ? "Nice work on Part 5. Ready for a quick timed quiz?"
-              : "あ行 is yours. Come back tomorrow and keep the streak!"}
+              ? `Nice work on ${unit.title}. Ready for a quick timed quiz?`
+              : `${unit.title} complete. Come back tomorrow and keep the streak!`}
           </p>
           <div className="flex w-full flex-col gap-2 pt-2">
             {unit.pathId === "toeic" && (

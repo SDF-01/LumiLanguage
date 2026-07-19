@@ -1,20 +1,8 @@
 /**
  * Character voices for LUMI.
  *
- * HOW TO CHANGE A VOICE
- * 1. Edit the `model` field below (shortcut or full HuggingFace repo).
- * 2. Restart / hard-refresh the browser so IndexedDB can fetch the new model.
- * 3. Tap Listen once (first run downloads + caches the model).
- *
- * Built-in piper-plus shortcuts:
- * - "tsukuyomi"  → ayousanz/piper-plus-tsukuyomi-chan (anime-style JA tutor)
- * - "css10"      → ayousanz/piper-plus-css10-ja-6lang (clearer / more neutral)
- *
- * Or paste any piper-plus ONNX repo, e.g.:
- *   model: "ayousanz/piper-plus-tsukuyomi-chan"
- *
+ * Default learner voice is always the female tutor (Tsukuyomi-chan via piper-plus).
  * Docs: https://github.com/ayutaz/piper-plus
- * Models: https://huggingface.co/ayousanz
  */
 
 export type TtsLang = "en-US" | "ja-JP";
@@ -33,34 +21,32 @@ export type VoiceCharacter = {
   bestFor: TtsLang[];
 };
 
+/** Female tutor voice only — used for every Listen button. */
 export const VOICE_CHARACTERS: Record<VoiceCharacterId, VoiceCharacter> = {
   lumi: {
     id: "lumi",
     label: "Lumi",
     labelJa: "ルミ",
-    // Character-style Japanese voice (Tsukuyomi-chan). Less "news reader".
     model: "tsukuyomi",
-    blurb: "Warm tutor character (Tsukuyomi-chan)",
+    blurb: "Warm female tutor (slower classroom pace)",
     bestFor: ["ja-JP", "en-US"],
   },
+  // Kept for API compatibility; both map to the same female model.
   sensei: {
     id: "sensei",
-    label: "Sensei",
-    labelJa: "先生",
-    // Clearer classroom tone.
-    model: "css10",
-    blurb: "Clear classroom voice (CSS10)",
+    label: "Lumi",
+    labelJa: "ルミ",
+    model: "tsukuyomi",
+    blurb: "Warm female tutor (slower classroom pace)",
     bestFor: ["ja-JP", "en-US"],
   },
   announcer: {
     id: "announcer",
-    label: "Announcer",
-    labelJa: "アナウンス",
-    // Same CSS10 model, different label so learners can A/B styles.
-    // Swap `model` to another HF repo when you find a preferred voice.
-    model: "css10",
-    blurb: "Neutral TOEIC-style delivery (swap model in tts-voices.ts)",
-    bestFor: ["en-US"],
+    label: "Lumi",
+    labelJa: "ルミ",
+    model: "tsukuyomi",
+    blurb: "Warm female tutor (slower classroom pace)",
+    bestFor: ["en-US", "ja-JP"],
   },
 };
 
@@ -70,11 +56,11 @@ export function toPiperLanguage(lang: TtsLang): PiperLanguage {
   return lang.startsWith("ja") ? "ja" : "en";
 }
 
-export function defaultVoiceForLang(lang: TtsLang): VoiceCharacterId {
-  return lang.startsWith("ja") ? "lumi" : "announcer";
+export function defaultVoiceForLang(_lang: TtsLang): VoiceCharacterId {
+  return "lumi";
 }
 
-/** List for UI pickers */
+/** List for UI pickers — single female voice. */
 export function listVoiceCharacters(): VoiceCharacter[] {
-  return Object.values(VOICE_CHARACTERS);
+  return [VOICE_CHARACTERS.lumi];
 }
