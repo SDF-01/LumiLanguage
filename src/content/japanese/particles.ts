@@ -1,0 +1,102 @@
+import type { LearningUnit } from "@/lib/types";
+
+export const japaneseParticlesUnit: LearningUnit = {
+  id: "jp-particles-basics",
+  pathId: "japanese",
+  title: "Particles は・を・に",
+  titleJa: "助詞 は・を・に",
+  subtitle: "Tiny words that mark the job of each phrase",
+  xpReward: 130,
+  tutorial: {
+    title: "Particle power",
+    titleJa: "助詞の力",
+    bodyEn:
+      "Particles come after words to show their role. は (wa) marks the topic, を (o) marks the object, and に (ni) often marks time or destination. You will see them in almost every Japanese sentence.",
+    bodyJa:
+      "助詞は語のあとに付き、役割を示します。はは主題、をは目的語、には時間や行き先などを表すことが多いです。",
+    tips: [
+      "は is written 'ha' but said 'wa' as a particle",
+      "を is said 'o'",
+      "Read full sentences, not particles alone",
+    ],
+  },
+  exercises: [
+    {
+      id: "jp-p-1",
+      kind: "multiple-choice",
+      prompt: "Fill in: わたし___学生です。 (I am a student.)",
+      promptJa: "空所に入る助詞は？",
+      choices: [
+        { id: "a", label: "A) を" },
+        { id: "b", label: "B) は" },
+        { id: "c", label: "C) に" },
+        { id: "d", label: "D) と" },
+      ],
+      correctChoiceId: "b",
+      explanationEn: "は marks the topic: As for me, (I) am a student.",
+      explanationJa: "主題を示す は が入ります。",
+    },
+    {
+      id: "jp-p-2",
+      kind: "multiple-choice",
+      prompt: "Fill in: パン___食べます。 (I eat bread.)",
+      promptJa: "パン___食べます。",
+      choices: [
+        { id: "a", label: "A) は" },
+        { id: "b", label: "B) に" },
+        { id: "c", label: "C) を" },
+        { id: "d", label: "D) で" },
+      ],
+      correctChoiceId: "c",
+      explanationEn: "を marks the direct object of 食べます.",
+      explanationJa: "食べますの目的語には を を使います。",
+    },
+    {
+      id: "jp-p-3",
+      kind: "multiple-choice",
+      prompt: "Fill in: がっこう___行きます。 (I go to school.)",
+      promptJa: "がっこう___行きます。",
+      choices: [
+        { id: "a", label: "A) に" },
+        { id: "b", label: "B) を" },
+        { id: "c", label: "C) も" },
+        { id: "d", label: "D) や" },
+      ],
+      correctChoiceId: "a",
+      explanationEn: "に often marks destination with 行きます.",
+      explanationJa: "行き先には に がよく使われます。",
+    },
+    {
+      id: "jp-p-4",
+      kind: "listen-choice",
+      prompt: "You hear a sentence. Which particle was used after コーヒー?",
+      promptJa: "コーヒーのあとの助詞は？",
+      ttsText: "コーヒーを飲みます",
+      ttsLang: "ja-JP",
+      choices: [
+        { id: "a", label: "A) は" },
+        { id: "b", label: "B) を" },
+        { id: "c", label: "C) に" },
+        { id: "d", label: "D) と" },
+      ],
+      correctChoiceId: "b",
+      explanationEn: "コーヒーを飲みます uses object marker を.",
+      explanationJa: "コーヒーを飲みます、なので を です。",
+    },
+    {
+      id: "jp-p-5",
+      kind: "multiple-choice",
+      prompt: "Which particle marks the topic?",
+      promptJa: "主題を示す助詞は？",
+      choices: [
+        { id: "a", label: "A) を" },
+        { id: "b", label: "B) に" },
+        { id: "c", label: "C) は" },
+        { id: "d", label: "D) へ only" },
+      ],
+      correctChoiceId: "c",
+      explanationEn: "は is the topic marker (pronounced wa).",
+      explanationJa: "は（わ）が主題の助詞です。",
+    },
+  ],
+};

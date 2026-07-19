@@ -1,0 +1,49 @@
+{
+  "source": "Agent Dev Ops / claude-code-templates",
+  "skills": [
+    "nextjs-app-router-patterns",
+    "react-best-practices",
+    "tailwind-design-system",
+    "shadcn",
+    "develop-web-game",
+    "accessibility-auditor",
+    "ui-ux-pro-max",
+    "web-design-guidelines",
+    "ui-design-system",
+    "requirements-clarity",
+    "game-changing-features",
+    "frontend-to-backend-requirements",
+    "accessibility",
+    "webapp-testing",
+    "typescript-pro",
+    "react-ui-patterns",
+    "nextjs-best-practices",
+    "e2e-testing-patterns"
+  ],
+  "commands": [
+    "nextjs-vercel",
+    "design",
+    "testing",
+    "performance",
+    "project-management",
+    "game-development"
+  ],
+  "installedAt": "2026-07-19T17:47:12.1250732+09:00",
+  "agents": [
+    "accessibility-tester.md",
+    "accessibility.md",
+    "backend-architect.md",
+    "expert-nextjs-developer.md",
+    "expert-react-frontend-engineer.md",
+    "frontend-developer.md",
+    "fullstack-developer.md",
+    "game-developer.md",
+    "lingodotdev-i18n.md",
+    "nextjs-architecture-expert.md",
+    "performance-engineer.md",
+    "react-performance-optimizer.md",
+    "screenshot-ui-analyzer.md",
+    "security-auditor.md",
+    "web-accessibility-checker.md"
+  ]
+}

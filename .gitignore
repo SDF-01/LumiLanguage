@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent session notes / local tooling
+/agent_memory/
+/.cursor/
+/.claude/
+/notebooks/

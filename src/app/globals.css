@@ -1,26 +1,227 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-display);
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.7);
+  --radius-md: calc(var(--radius) * 0.85);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.35);
+  --radius-2xl: calc(var(--radius) * 1.7);
+  --radius-3xl: calc(var(--radius) * 2.1);
+  --radius-4xl: calc(var(--radius) * 2.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Locked palette — Tiffany + baby blue */
+  --brand-primary: #40c8c8;
+  --brand-primary-deep: #2a9e9e;
+  --brand-baby: #b8e4f0;
+  --brand-mist: #eaf7fb;
+  --brand-tint: #dff4f8;
+  --brand-border: #b5dde8;
+  --brand-coral: #ff7a59;
+  --brand-sun: #ffc857;
+  --brand-ink: #1f2a37;
+
+  /* Compatibility aliases (jade → tiffany) */
+  --brand-jade: var(--brand-primary);
+  --brand-jade-deep: var(--brand-primary-deep);
+  --brand-sky: var(--brand-mist);
+
+  --surface: #ffffff;
+  --background: #eaf7fb;
+  --foreground: #1f2a37;
+  --card: #ffffff;
+  --card-foreground: #1f2a37;
+  --popover: #ffffff;
+  --popover-foreground: #1f2a37;
+  --primary: #40c8c8;
+  --primary-foreground: #ffffff;
+  --secondary: #dff4f8;
+  --secondary-foreground: #1a6b75;
+  --muted: #e3f3f8;
+  --muted-foreground: #5b6b7c;
+  --accent: #fff1e8;
+  --accent-foreground: #9a3412;
+  --destructive: #e11d48;
+  --border: #b5dde8;
+  --input: #b5dde8;
+  --ring: #40c8c8;
+  --chart-1: #40c8c8;
+  --chart-2: #ff7a59;
+  --chart-3: #ffc857;
+  --chart-4: #7ec8f0;
+  --chart-5: #5b8def;
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2a37;
+  --sidebar-primary: #40c8c8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dff4f8;
+  --sidebar-accent-foreground: #1a6b75;
+  --sidebar-border: #b5dde8;
+  --sidebar-ring: #40c8c8;
+}
+
+.dark {
+  --background: #0f2428;
+  --foreground: #e8f8fb;
+  --card: #16343a;
+  --card-foreground: #e8f8fb;
+  --popover: #16343a;
+  --popover-foreground: #e8f8fb;
+  --primary: #5fdede;
+  --primary-foreground: #063033;
+  --secondary: #1f454c;
+  --secondary-foreground: #d4f4f7;
+  --muted: #1f454c;
+  --muted-foreground: #9bb8bf;
+  --accent: #3a2a22;
+  --accent-foreground: #ffd7c8;
+  --destructive: #fb7185;
+  --border: #2d5a63;
+  --input: #2d5a63;
+  --ring: #5fdede;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100dvh;
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -15%, #c5eef5 0%, transparent 58%),
+      radial-gradient(ellipse 50% 40% at 100% 20%, #d9f0ff 0%, transparent 50%),
+      radial-gradient(ellipse 45% 35% at 0% 80%, #e8fff8 0%, transparent 45%),
+      linear-gradient(180deg, #eaf7fb 0%, #f5fbfd 45%, #eaf7fb 100%);
+    background-attachment: fixed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), var(--font-body), sans-serif;
+  }
+  .soft-shadow {
+    box-shadow: 0 5px 0 color-mix(in oklab, var(--brand-primary-deep) 22%, transparent);
+  }
+  .soft-shadow-coral {
+    box-shadow: 0 5px 0 color-mix(in oklab, var(--brand-coral) 28%, transparent);
+  }
+  .pressable {
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .pressable:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 color-mix(in oklab, var(--brand-primary-deep) 22%, transparent);
+  }
+  .blob-drift {
+    animation: blob-drift 8s ease-in-out infinite;
+  }
+  .mascot-bounce {
+    animation: mascot-bounce 2.8s ease-in-out infinite;
+  }
+  .pop-in {
+    animation: pop-in 0.55s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+  }
+  .wiggle {
+    animation: wiggle 0.55s ease-in-out;
+  }
+}
+
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(12px, -10px) scale(1.05);
+  }
+}
+
+@keyframes mascot-bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.86) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-drift,
+  .mascot-bounce,
+  .pop-in,
+  .wiggle {
+    animation: none;
+  }
 }
