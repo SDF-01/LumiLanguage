@@ -1,6 +1,7 @@
 import type { LearningUnit } from "@/lib/types";
+import { withVocabTeach } from "@/content/toeic/vocab-factory";
 
-export const toeicVocabTravelUnit: LearningUnit = {
+const toeicVocabTravelUnitBase: LearningUnit = {
   id: "toeic-vocab-travel",
   pathId: "toeic",
   title: "VOCAB: Travel & logistics",
@@ -178,3 +179,43 @@ export const toeicVocabTravelUnit: LearningUnit = {
     },
   ],
 };
+
+export const toeicVocabTravelUnit = withVocabTeach(toeicVocabTravelUnitBase, [
+  {
+    word: "itinerary",
+    reading: "eye-TIN-uh-rer-ee",
+    meaningEn: "travel plan / schedule",
+    meaningJa: "旅程",
+  },
+  {
+    word: "destination",
+    reading: "des-ti-NAY-shun",
+    meaningEn: "place you are going",
+    meaningJa: "目的地",
+  },
+  {
+    word: "delay",
+    reading: "dih-LAY",
+    meaningEn: "later than planned",
+    meaningJa: "遅延",
+  },
+  {
+    word: "courier",
+    reading: "KUR-ee-er",
+    meaningEn: "delivery messenger",
+    meaningJa: "宅配・急送業者",
+  },
+  {
+    word: "boarding pass",
+    reading: "BOR-ding pass",
+    meaningEn: "ticket to board a plane",
+    meaningJa: "搭乗券",
+  },
+  {
+    word: "luggage",
+    reading: "LUG-ij",
+    meaningEn: "bags for travel",
+    meaningJa: "荷物",
+  },
+]);
+

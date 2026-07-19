@@ -12,8 +12,8 @@ import { recordExamScore } from "@/lib/progress";
 import { practicePercentToBandHint } from "@/lib/scoring";
 import type { TtsLang } from "@/lib/tts";
 
-const SECONDS = 180;
-const EXAM_ITEMS = 12;
+const SECONDS = 300;
+const EXAM_ITEMS = 20;
 
 function shuffle<T>(items: T[]): T[] {
   const copy = [...items];

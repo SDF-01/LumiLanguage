@@ -25,11 +25,13 @@ const en: Dictionary = {
   toeic: {
     title: "TOEIC 800+",
     subtitle:
-      "Start from scratch: VOCAB and READING first, then Listening Parts 1 to 4 and Reading Parts 5 to 7.",
-    startCta: "Start with VOCAB",
-    quizCta: "Timed L&R practice quiz",
+      "10-phase path: START HERE, themed VOCAB, READING, GRAMMAR packs, then Listening and Reading exam parts. Teach first, then practice.",
+    startCta: "Start with first phrases",
+    quizCta: "Timed L&R practice quiz (20 items)",
+    sectionStart: "START HERE",
     sectionVocab: "VOCAB",
     sectionReading: "READING",
+    sectionGrammar: "GRAMMAR (Part 5 patterns)",
     sectionListening: "LISTENING (exam parts)",
     sectionExamReading: "READING (exam parts)",
     wordsTitle: "5 words of the day",
@@ -78,11 +80,13 @@ const ja: Dictionary = {
   toeic: {
     title: "TOEIC 800点突破",
     subtitle:
-      "ゼロから学べます。まずVOCABとREADING、そのあとListening Part 1〜4、Reading Part 5〜7へ進みます。",
-    startCta: "VOCABから始める",
-    quizCta: "時間制限つき L&R クイズ",
+      "10フェーズ：まずはここから → テーマ別VOCAB → READING → 文法パック → 本番リスニング／リーディング。先に教えてから練習。",
+    startCta: "はじめてのフレーズから",
+    quizCta: "時間制限つき L&R クイズ（20問）",
+    sectionStart: "まずはここから",
     sectionVocab: "語彙 VOCAB",
     sectionReading: "読解 READING",
+    sectionGrammar: "文法（Part 5型）",
     sectionListening: "リスニング（本番パート）",
     sectionExamReading: "リーディング（本番パート）",
     wordsTitle: "今日の5語",

@@ -63,15 +63,14 @@ Lesson micro-order inside units when useful: **read → write → speak → list
 
 ## Current live vs planned
 
-**Live now:** VOCAB office, VOCAB travel, READING foundations, L1 to L4, R5 to R7, mini quiz, EN/JP UI for landing + TOEIC path.
+**Live now:** START HERE (E0–E3), VOCAB numbers/people/office/travel/dining/HR/finance, READING foundations, GRAMMAR B1–B3, L1 to L4, R5 to R7 + double Part 7, timed quiz 20/300s, progress gates for Listening and exam Reading, EN/JP UI.
 
 **Next implementation priority:**
 
-1. More VOCAB themes (dining, HR, finance)
-2. Grammar Part 5 pattern packs (B1 to B3)
-3. Part 7 double-passage unit
-4. Longer timed exam mode (20+ items)
-5. Progress gates (unlock L1 after V1+V2+R0)
+1. Grammar B4–B6 (pronouns, tense/voice, Part 6 insert)
+2. Half-test / fuller timed simulations
+3. Error log by part and vocab theme
+4. Triple-passage Part 7 set
 
 ## Accuracy guardrails
 

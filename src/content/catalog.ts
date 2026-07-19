@@ -47,6 +47,13 @@ import {
 } from "@/content/japanese/katakana-lines";
 import { japaneseKatakanaBridgeUnit } from "@/content/japanese/katakana-bridge";
 import { japaneseParticlesUnit } from "@/content/japanese/particles";
+import { toeicBridgeUnit } from "@/content/toeic/foundations-bridge";
+import { toeicSoundsUnit } from "@/content/toeic/foundations-sounds";
+import { toeicWelcomeUnit } from "@/content/toeic/foundations-welcome";
+import { toeicWordSystemsUnit } from "@/content/toeic/foundations-words";
+import { toeicGrammarConjunctionsUnit } from "@/content/toeic/grammar-conjunctions";
+import { toeicGrammarPrepositionsUnit } from "@/content/toeic/grammar-prepositions";
+import { toeicGrammarWordFormsUnit } from "@/content/toeic/grammar-word-forms";
 import { toeicPart1Unit } from "@/content/toeic/part1";
 import { toeicPart2Unit } from "@/content/toeic/part2";
 import { toeicPart3Unit } from "@/content/toeic/part3";
@@ -54,15 +61,33 @@ import { toeicPart4Unit } from "@/content/toeic/part4";
 import { toeicPart5Unit } from "@/content/toeic/part5";
 import { toeicPart6Unit } from "@/content/toeic/part6";
 import { toeicPart7Unit } from "@/content/toeic/part7";
+import { toeicPart7DoubleUnit } from "@/content/toeic/part7-double";
 import { toeicReadingFoundationsUnit } from "@/content/toeic/reading-foundations";
+import { toeicVocabDiningUnit } from "@/content/toeic/vocab-dining";
+import { toeicVocabFinanceUnit } from "@/content/toeic/vocab-finance";
+import { toeicVocabHrUnit } from "@/content/toeic/vocab-hr";
+import { toeicVocabNumbersUnit } from "@/content/toeic/vocab-numbers";
 import { toeicVocabOfficeUnit } from "@/content/toeic/vocab-office";
+import { toeicVocabPeopleUnit } from "@/content/toeic/vocab-people";
 import { toeicVocabTravelUnit } from "@/content/toeic/vocab-travel";
 import type { LearningUnit, PathId } from "@/lib/types";
 
 const units: LearningUnit[] = [
+  toeicWelcomeUnit,
+  toeicSoundsUnit,
+  toeicWordSystemsUnit,
+  toeicBridgeUnit,
+  toeicVocabNumbersUnit,
+  toeicVocabPeopleUnit,
   toeicVocabOfficeUnit,
   toeicVocabTravelUnit,
+  toeicVocabDiningUnit,
+  toeicVocabHrUnit,
+  toeicVocabFinanceUnit,
   toeicReadingFoundationsUnit,
+  toeicGrammarWordFormsUnit,
+  toeicGrammarPrepositionsUnit,
+  toeicGrammarConjunctionsUnit,
   toeicPart1Unit,
   toeicPart2Unit,
   toeicPart3Unit,
@@ -70,6 +95,7 @@ const units: LearningUnit[] = [
   toeicPart5Unit,
   toeicPart6Unit,
   toeicPart7Unit,
+  toeicPart7DoubleUnit,
   japaneseWelcomeUnit,
   japaneseSoundsUnit,
   japaneseScriptsUnit,
@@ -130,14 +156,28 @@ export function getExamPool() {
     ...toeicPart5Unit.exercises.filter((e) => e.kind === "multiple-choice"),
     ...toeicPart6Unit.exercises.filter((e) => e.kind === "multiple-choice"),
     ...toeicPart7Unit.exercises.filter((e) => e.kind === "multiple-choice"),
+    ...toeicPart7DoubleUnit.exercises.filter((e) => e.kind === "multiple-choice"),
+    ...toeicGrammarWordFormsUnit.exercises.filter(
+      (e) => e.kind === "multiple-choice",
+    ),
+    ...toeicGrammarPrepositionsUnit.exercises.filter(
+      (e) => e.kind === "multiple-choice",
+    ),
+    ...toeicGrammarConjunctionsUnit.exercises.filter(
+      (e) => e.kind === "multiple-choice",
+    ),
     ...toeicPart2Unit.exercises.filter((e) => e.kind === "listen-choice"),
     ...toeicVocabOfficeUnit.exercises.filter((e) => e.kind === "multiple-choice"),
+    ...toeicVocabFinanceUnit.exercises.filter(
+      (e) => e.kind === "multiple-choice",
+    ),
   ];
 }
 
 export type PathSection =
   | "vocab"
   | "reading"
+  | "grammar"
   | "listening"
   | "examReading"
   | "startHere"
@@ -156,17 +196,80 @@ export type PathNode = {
 
 export const toeicPathNodes: PathNode[] = [
   {
+    id: "E0",
+    label: "First English phrases",
+    labelJa: "はじめての英語フレーズ",
+    unitId: toeicWelcomeUnit.id,
+    section: "startHere",
+  },
+  {
+    id: "E1",
+    label: "English sounds (R/L, TH, vowels)",
+    labelJa: "英語の音（R/L・TH・母音）",
+    unitId: toeicSoundsUnit.id,
+    section: "startHere",
+  },
+  {
+    id: "E2",
+    label: "How English words work",
+    labelJa: "英単語の仕組み",
+    unitId: toeicWordSystemsUnit.id,
+    section: "startHere",
+  },
+  {
+    id: "E3",
+    label: "Ready for vocabulary",
+    labelJa: "語彙レッスン準備",
+    unitId: toeicBridgeUnit.id,
+    section: "startHere",
+  },
+  {
+    id: "V0",
+    label: "Learn + practice: Numbers, dates & time",
+    labelJa: "覚える＋練習：数・日付・時刻",
+    unitId: toeicVocabNumbersUnit.id,
+    section: "vocab",
+  },
+  {
+    id: "V0b",
+    label: "Learn + practice: People & jobs",
+    labelJa: "覚える＋練習：人・職業",
+    unitId: toeicVocabPeopleUnit.id,
+    section: "vocab",
+  },
+  {
     id: "V1",
-    label: "VOCAB: Office basics",
-    labelJa: "語彙：オフィス基礎",
+    label: "Learn + practice: Office basics",
+    labelJa: "覚える＋練習：オフィス基礎",
     unitId: toeicVocabOfficeUnit.id,
     section: "vocab",
   },
   {
     id: "V2",
-    label: "VOCAB: Travel & logistics",
-    labelJa: "語彙：旅行・物流",
+    label: "Learn + practice: Travel & logistics",
+    labelJa: "覚える＋練習：旅行・物流",
     unitId: toeicVocabTravelUnit.id,
+    section: "vocab",
+  },
+  {
+    id: "V3",
+    label: "Learn + practice: Dining & shopping",
+    labelJa: "覚える＋練習：飲食・買い物",
+    unitId: toeicVocabDiningUnit.id,
+    section: "vocab",
+  },
+  {
+    id: "V4",
+    label: "Learn + practice: HR & meetings",
+    labelJa: "覚える＋練習：人事・会議",
+    unitId: toeicVocabHrUnit.id,
+    section: "vocab",
+  },
+  {
+    id: "V5",
+    label: "Learn + practice: Finance",
+    labelJa: "覚える＋練習：財務",
+    unitId: toeicVocabFinanceUnit.id,
     section: "vocab",
   },
   {
@@ -175,6 +278,27 @@ export const toeicPathNodes: PathNode[] = [
     labelJa: "読解：基礎",
     unitId: toeicReadingFoundationsUnit.id,
     section: "reading",
+  },
+  {
+    id: "G1",
+    label: "Learn + practice: Word forms",
+    labelJa: "覚える＋練習：品詞",
+    unitId: toeicGrammarWordFormsUnit.id,
+    section: "grammar",
+  },
+  {
+    id: "G2",
+    label: "Learn + practice: Prepositions",
+    labelJa: "覚える＋練習：前置詞",
+    unitId: toeicGrammarPrepositionsUnit.id,
+    section: "grammar",
+  },
+  {
+    id: "G3",
+    label: "Learn + practice: Conjunctions",
+    labelJa: "覚える＋練習：接続詞",
+    unitId: toeicGrammarConjunctionsUnit.id,
+    section: "grammar",
   },
   {
     id: "L1",
@@ -223,6 +347,13 @@ export const toeicPathNodes: PathNode[] = [
     label: "Reading Part 7: Reading Comprehension",
     labelJa: "リーディング Part 7：読解",
     unitId: toeicPart7Unit.id,
+    section: "examReading",
+  },
+  {
+    id: "R7b",
+    label: "Reading Part 7: Double passages",
+    labelJa: "リーディング Part 7：ダブル文書",
+    unitId: toeicPart7DoubleUnit.id,
     section: "examReading",
   },
 ];
@@ -523,12 +654,12 @@ export const pathMeta = {
     title: "TOEIC 800+",
     titleJa: "TOEIC 800点突破",
     blurb:
-      "Official Listening and Reading skills. Start with VOCAB and READING, then exam Parts 1 to 7. Original items only.",
+      "10-phase path: START HERE, themed VOCAB, READING, GRAMMAR, then Listening and Reading exam skills including double Part 7. Teach first, then practice. Original items only.",
     blurbJa:
-      "公式のListening & Readingスキル。まずVOCABとREADING、その後Part 1〜7へ。オリジナル問題のみです。",
+      "10フェーズ：まずはここから、テーマ別VOCAB、READING、文法、本番リスニング／リーディング（ダブルPart 7含む）。先に教えてから練習。オリジナル問題のみ。",
     cta: "Continue TOEIC path",
     ctaJa: "TOEICコースへ",
-    unitId: toeicVocabOfficeUnit.id,
+    unitId: toeicWelcomeUnit.id,
   },
   japanese: {
     id: "japanese" as const,

@@ -25,8 +25,10 @@ export type Dictionary = {
     subtitle: string;
     startCta: string;
     quizCta: string;
+    sectionStart: string;
     sectionVocab: string;
     sectionReading: string;
+    sectionGrammar: string;
     sectionListening: string;
     sectionExamReading: string;
     wordsTitle: string;

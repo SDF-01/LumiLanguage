@@ -24,6 +24,7 @@ export function PathTrail({
   primaryCta,
   secondaryCta,
   readyLabel = "Tap to play",
+  lockedLabel = "Locked",
   spotlight,
   tone = "mist",
 }: {
@@ -33,6 +34,7 @@ export function PathTrail({
   primaryCta: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
   readyLabel?: string;
+  lockedLabel?: string;
   spotlight?: ReactNode;
   tone?: "mist" | "coral" | "sun";
 }) {
@@ -127,7 +129,7 @@ export function PathTrail({
                             : "text-[var(--brand-primary-deep)]",
                         )}
                       >
-                        {node.locked ? "Coming soon" : readyLabel}
+                        {node.locked ? lockedLabel : readyLabel}
                       </p>
                     </div>
                   </>

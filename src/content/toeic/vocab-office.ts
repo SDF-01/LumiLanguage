@@ -1,6 +1,7 @@
 import type { LearningUnit } from "@/lib/types";
+import { withVocabTeach } from "@/content/toeic/vocab-factory";
 
-export const toeicVocabOfficeUnit: LearningUnit = {
+const toeicVocabOfficeUnitBase: LearningUnit = {
   id: "toeic-vocab-office",
   pathId: "toeic",
   title: "VOCAB: Office basics",
@@ -178,3 +179,43 @@ export const toeicVocabOfficeUnit: LearningUnit = {
     },
   ],
 };
+
+export const toeicVocabOfficeUnit = withVocabTeach(toeicVocabOfficeUnitBase, [
+  {
+    word: "deadline",
+    reading: "DED-line",
+    meaningEn: "final due time",
+    meaningJa: "締切",
+  },
+  {
+    word: "agenda",
+    reading: "uh-JEN-duh",
+    meaningEn: "meeting topic list",
+    meaningJa: "議題",
+  },
+  {
+    word: "invoice",
+    reading: "IN-vois",
+    meaningEn: "bill for payment",
+    meaningJa: "請求書",
+  },
+  {
+    word: "memo",
+    reading: "MEM-oh",
+    meaningEn: "short internal note",
+    meaningJa: "メモ・社内連絡",
+  },
+  {
+    word: "schedule",
+    reading: "SKED-jool",
+    meaningEn: "timetable / plan",
+    meaningJa: "予定・スケジュール",
+  },
+  {
+    word: "meeting",
+    reading: "MEE-ting",
+    meaningEn: "planned gathering",
+    meaningJa: "会議",
+  },
+]);
+

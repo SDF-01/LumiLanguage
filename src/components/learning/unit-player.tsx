@@ -160,8 +160,12 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           {hasTeach && (
             <p className="rounded-2xl bg-[var(--brand-tint)] px-4 py-3 text-sm font-bold text-[var(--brand-primary-deep)]">
               {locale === "ja"
-                ? "次は Learn：文字を1つずつ音声つきで教えます。クイズはそのあとです。"
-                : "Next is Learn: we teach each letter with audio. The quiz comes after."}
+                ? unit.pathId === "toeic"
+                  ? "次は Learn：英語を1つずつ音声つきで教えます。クイズはそのあとです。"
+                  : "次は Learn：文字を1つずつ音声つきで教えます。クイズはそのあとです。"
+                : unit.pathId === "toeic"
+                  ? "Next is Learn: we teach each English item with audio. The quiz comes after."
+                  : "Next is Learn: we teach each letter with audio. The quiz comes after."}
             </p>
           )}
           {unit.tutorial.tips && (
