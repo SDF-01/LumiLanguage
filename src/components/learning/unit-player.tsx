@@ -118,13 +118,17 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           : "Intro";
 
   return (
-    <div className="mx-auto flex w-full max-w-lg flex-1 flex-col gap-4 px-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] pt-4">
+    <div className="relative mx-auto flex w-full max-w-lg flex-1 flex-col gap-4 px-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] pt-4">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-48 bg-[radial-gradient(ellipse_at_top,rgba(64,200,200,0.16),transparent_70%)]"
+      />
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <p className="font-display text-base font-semibold text-[var(--brand-primary-deep)]">
             {unit.title}
           </p>
-          <span className="rounded-xl border border-[var(--brand-border)] bg-white px-3 py-1 text-sm font-bold text-muted-foreground">
+          <span className="rounded-xl border border-[var(--brand-border)] bg-white/90 px-3 py-1 text-sm font-bold text-[var(--brand-primary-deep)] shadow-sm">
             {phaseBadge}
           </span>
         </div>
@@ -316,17 +320,18 @@ function TeachView({
         </span>
       </div>
 
-      <div className="flex flex-col items-center gap-2 py-4 text-center">
-        <p
-          className="text-7xl font-semibold leading-none text-[var(--brand-primary-deep)] sm:text-8xl"
-          style={{ fontFamily: "var(--font-jp), \"Noto Sans JP\", sans-serif" }}
-        >
+      <div className="relative flex flex-col items-center gap-2 py-5 text-center">
+        <div
+          aria-hidden
+          className="absolute inset-x-8 top-2 h-28 rounded-full bg-[radial-gradient(circle,rgba(64,200,200,0.2),transparent_70%)]"
+        />
+        <p className="font-jp relative text-7xl font-semibold leading-none text-[var(--brand-primary-deep)] sm:text-8xl">
           {card.glyph}
         </p>
-        <p className="font-display text-2xl font-semibold tracking-wide text-[var(--brand-coral)]">
+        <p className="font-display relative text-2xl font-semibold tracking-wide text-[var(--brand-coral)]">
           {card.reading}
         </p>
-        <p className="text-sm font-medium text-muted-foreground">
+        <p className="relative text-sm font-medium text-muted-foreground">
           {locale === "ja" ? "ローマ字の読み" : "Romaji spelling"}
         </p>
       </div>

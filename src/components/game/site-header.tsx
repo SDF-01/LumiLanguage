@@ -43,7 +43,7 @@ function LanguageSelector() {
 
   return (
     <div
-      className="inline-flex rounded-xl border-2 border-[var(--brand-border)] bg-white p-0.5"
+      className="inline-flex rounded-xl border-2 border-[var(--brand-border)] bg-white/90 p-0.5 shadow-sm"
       role="group"
       aria-label={t.nav.language}
     >
@@ -53,10 +53,10 @@ function LanguageSelector() {
           type="button"
           onClick={() => setLocale(code)}
           className={cn(
-            "min-h-8 min-w-9 rounded-lg px-2 text-xs font-bold uppercase",
+            "min-h-8 min-w-9 rounded-lg px-2 text-xs font-bold uppercase transition",
             locale === code
-              ? "bg-[var(--brand-primary)] text-white"
-              : "text-[var(--brand-primary-deep)]",
+              ? "bg-[var(--brand-primary)] text-white soft-shadow !shadow-[0_2px_0_#2a9e9e55]"
+              : "text-[var(--brand-primary-deep)] hover:bg-[var(--brand-tint)]",
           )}
         >
           {code}
@@ -88,10 +88,13 @@ export function SiteHeader() {
   const streak = progress?.streak ?? 0;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--brand-border)] bg-white/95 backdrop-blur-md pt-[env(safe-area-inset-top)]">
-      <div className="mx-auto flex h-12 max-w-lg items-center justify-between gap-2 px-3">
-        <Link href="/" className="flex min-h-9 items-center gap-1.5">
-          <LumiMascot size={28} mood="happy" className="!animate-none" />
+    <header className="sticky top-0 z-40 border-b border-[var(--brand-border)]/80 bg-[color-mix(in_oklab,white_82%,#dff4f8)]/90 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
+      <div className="mx-auto flex min-h-12 max-w-lg items-center justify-between gap-2 px-3 py-1.5">
+        <Link
+          href="/"
+          className="flex min-h-9 items-center gap-1.5 rounded-xl px-1 transition hover:bg-white/50"
+        >
+          <LumiMascot size={30} mood="happy" className="!animate-none" />
           <span className="font-display text-base font-semibold tracking-wide text-[var(--brand-primary-deep)]">
             {brand.name}
           </span>
@@ -100,11 +103,11 @@ export function SiteHeader() {
         <div className="flex items-center gap-1.5">
           {learning ? (
             <div className="flex items-center gap-1 text-xs font-bold">
-              <span className="inline-flex min-h-8 items-center gap-1 rounded-xl bg-[#fff6d6] px-2 text-[#9a6700]">
+              <span className="inline-flex min-h-8 items-center gap-1 rounded-xl border border-[#ffe8a3] bg-gradient-to-b from-[#fff9e0] to-[#fff1b8] px-2 text-[#9a6700]">
                 <StarIcon />
                 {xp}
               </span>
-              <span className="inline-flex min-h-8 items-center gap-1 rounded-xl bg-[#ffe8e0] px-2 text-[#c2410c]">
+              <span className="inline-flex min-h-8 items-center gap-1 rounded-xl border border-[#ffd0c2] bg-gradient-to-b from-[#fff4ef] to-[#ffe4da] px-2 text-[#c2410c]">
                 <StreakIcon />
                 {streak}
               </span>
@@ -116,25 +119,24 @@ export function SiteHeader() {
             >
               <Link
                 href="/toeic"
-                className="inline-flex min-h-8 items-center rounded-lg px-2 hover:bg-[var(--brand-tint)]"
+                className="inline-flex min-h-8 items-center rounded-lg px-2 hover:bg-white/70"
               >
                 {t.nav.toeic}
               </Link>
               <Link
                 href="/japanese"
-                className="inline-flex min-h-8 items-center rounded-lg px-2 hover:bg-[var(--brand-tint)]"
+                className="inline-flex min-h-8 items-center rounded-lg px-2 hover:bg-white/70"
               >
                 {t.nav.japanese}
               </Link>
               <Link
                 href="/paths"
-                className="inline-flex min-h-8 items-center rounded-xl bg-[var(--brand-primary)] px-2.5 text-white hover:bg-[var(--brand-primary-deep)]"
+                className="pressable inline-flex min-h-8 items-center rounded-xl bg-[var(--brand-primary)] px-2.5 text-white hover:bg-[var(--brand-primary-deep)]"
               >
                 {t.nav.paths}
               </Link>
             </nav>
           )}
-          {/* Always visible: EN / JP for landing + TOEIC chrome */}
           <LanguageSelector />
         </div>
       </div>

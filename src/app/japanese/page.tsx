@@ -22,6 +22,7 @@ export default function JapanesePathPage() {
 
   return (
     <PathTrail
+      tone="coral"
       title={locale === "ja" ? pathMeta.japanese.titleJa : pathMeta.japanese.title}
       subtitle={
         locale === "ja" ? pathMeta.japanese.blurbJa : pathMeta.japanese.blurb

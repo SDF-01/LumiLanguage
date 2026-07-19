@@ -39,13 +39,20 @@ function WordRow({
       : word.explanationEn;
 
   return (
-    <li className="flex items-start gap-2 border-t border-[var(--brand-border)] py-2.5 first:border-t-0 first:pt-0">
+    <li className="flex items-start gap-2.5 border-t border-[var(--brand-border)]/80 py-3 first:border-t-0 first:pt-1">
       <div className="min-w-0 flex-1">
-        <p className="font-display text-xl font-semibold leading-tight text-[var(--brand-primary-deep)]">
+        <p
+          className="font-display text-xl font-semibold leading-tight text-[var(--brand-primary-deep)]"
+          style={{
+            fontFamily: /[\u3040-\u30ff\u4e00-\u9faf]/.test(word.word)
+              ? "var(--font-jp), var(--font-display), sans-serif"
+              : undefined,
+          }}
+        >
           {word.word}
         </p>
         {word.reading ? (
-          <p className="text-xs font-semibold tracking-wide text-[var(--brand-coral)]">
+          <p className="text-xs font-bold tracking-wide text-[var(--brand-coral)]">
             {word.reading}
           </p>
         ) : null}
@@ -58,7 +65,7 @@ function WordRow({
         type="button"
         variant="outline"
         size="sm"
-        className="mt-0.5 shrink-0 rounded-xl border-2 border-[var(--brand-border)] bg-white px-2.5 font-bold"
+        className="pressable mt-0.5 shrink-0 rounded-xl border-2 border-[var(--brand-border)] bg-white px-2.5 font-bold text-[var(--brand-primary-deep)] hover:bg-[var(--brand-tint)]"
         onClick={() => void playWord(word)}
         aria-label={`${listenLabel}: ${word.word}`}
       >
@@ -86,9 +93,14 @@ export function WordsOfTheDay({
   const dateLabel = formatDailyDateLabel();
 
   return (
-    <SoftPanel className={cn("pop-in flex flex-col gap-3 !p-4", className)}>
+    <SoftPanel
+      className={cn("rise-in stagger-2 flex flex-col gap-3 !p-4", className)}
+    >
       <div className="flex items-start justify-between gap-2">
         <div>
+          <p className="text-[10px] font-bold tracking-[0.16em] text-[var(--brand-coral)] uppercase">
+            Daily drop
+          </p>
           <h2 className="font-display text-lg font-semibold text-[var(--brand-primary-deep)]">
             {title}
           </h2>
@@ -98,17 +110,17 @@ export function WordsOfTheDay({
             </p>
           ) : null}
         </div>
-        <span className="shrink-0 rounded-lg bg-[var(--brand-sky)] px-2 py-1 text-[10px] font-bold tracking-wide text-[var(--brand-primary-deep)]">
+        <span className="shrink-0 rounded-xl border border-[var(--brand-border)] bg-gradient-to-b from-white to-[var(--brand-tint)] px-2.5 py-1 text-[10px] font-bold tracking-wide text-[var(--brand-primary-deep)]">
           {dateLabel}
         </span>
       </div>
 
       {groups.map((group) => (
-        <div key={group.title} className="flex flex-col gap-1">
-          <h3 className="font-display text-xs font-semibold tracking-wide text-[var(--brand-coral)]">
+        <div key={group.title} className="flex flex-col gap-1.5">
+          <h3 className="font-display text-[11px] font-semibold tracking-[0.14em] text-[var(--brand-coral)] uppercase">
             {group.title}
           </h3>
-          <ul className="rounded-2xl border-2 border-[var(--brand-border)] bg-[#f7fbf9] px-3 py-2">
+          <ul className="rounded-2xl border-2 border-[var(--brand-border)] bg-gradient-to-b from-[#f8fcfd] to-[#eef8fa] px-3 py-1.5">
             {group.words.map((word) => (
               <WordRow
                 key={word.id}

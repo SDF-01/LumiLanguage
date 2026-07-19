@@ -22,6 +22,7 @@ export default function ToeicPathPage() {
 
   return (
     <PathTrail
+      tone="mist"
       title={locale === "ja" ? pathMeta.toeic.titleJa : t.toeic.title}
       subtitle={t.toeic.subtitle}
       readyLabel={t.common.readyToPlay}
