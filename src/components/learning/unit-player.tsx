@@ -9,15 +9,21 @@ import { SoftPanel } from "@/components/brand/soft-panel";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { completeUnit } from "@/lib/progress";
-import type { Exercise, LearningUnit } from "@/lib/types";
+import type { Exercise, LearningUnit, TeachCard } from "@/lib/types";
 import { skillForExercise, skillLabel } from "@/lib/skills";
 import { unlockAudio, type TtsLang } from "@/lib/tts";
+import { useLocale } from "@/lib/i18n/locale-context";
 
-type Phase = "tutorial" | "exercise" | "checkpoint";
+type Phase = "tutorial" | "teach" | "exercise" | "checkpoint";
 
 export function UnitPlayer({ unit }: { unit: LearningUnit }) {
   const router = useRouter();
+  const { locale } = useLocale();
+  const teachCards = unit.teach ?? [];
+  const hasTeach = teachCards.length > 0;
+
   const [phase, setPhase] = useState<Phase>("tutorial");
+  const [teachIndex, setTeachIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -27,15 +33,50 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
 
   const exercise = unit.exercises[index];
   const total = unit.exercises.length;
-  const progressValue = useMemo(() => {
-    if (phase === "tutorial") return 8;
-    if (phase === "checkpoint") return 100;
-    return Math.round(((index + (revealed ? 1 : 0)) / total) * 88) + 8;
-  }, [phase, index, revealed, total]);
+  const teachTotal = teachCards.length;
+  const teachCard = teachCards[teachIndex];
 
-  function startExercises() {
+  const progressValue = useMemo(() => {
+    if (phase === "tutorial") return 6;
+    if (phase === "checkpoint") return 100;
+    if (phase === "teach") {
+      const teachSpan = hasTeach ? 40 : 0;
+      return 6 + Math.round(((teachIndex + 1) / Math.max(teachTotal, 1)) * teachSpan);
+    }
+    const base = hasTeach ? 46 : 6;
+    const span = hasTeach ? 50 : 90;
+    return (
+      base + Math.round(((index + (revealed ? 1 : 0)) / Math.max(total, 1)) * span)
+    );
+  }, [
+    phase,
+    index,
+    revealed,
+    total,
+    teachIndex,
+    teachTotal,
+    hasTeach,
+  ]);
+
+  function startFromTutorial() {
     unlockAudio();
+    if (hasTeach) {
+      setTeachIndex(0);
+      setPhase("teach");
+      return;
+    }
     setPhase("exercise");
+  }
+
+  function nextTeach() {
+    if (teachIndex + 1 >= teachTotal) {
+      setIndex(0);
+      setSelected(null);
+      setRevealed(false);
+      setPhase("exercise");
+      return;
+    }
+    setTeachIndex((i) => i + 1);
   }
 
   function submitChoice(choiceId: string) {
@@ -67,6 +108,15 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
     setJustWrong(false);
   }
 
+  const phaseBadge =
+    phase === "exercise"
+      ? `Quiz ${index + 1}/${total}`
+      : phase === "teach"
+        ? `Learn ${teachIndex + 1}/${teachTotal}`
+        : phase === "checkpoint"
+          ? "Done"
+          : "Intro";
+
   return (
     <div className="mx-auto flex w-full max-w-lg flex-1 flex-col gap-4 px-4 pb-[calc(5.75rem+env(safe-area-inset-bottom))] pt-4">
       <div className="flex flex-col gap-2">
@@ -74,11 +124,14 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           <p className="font-display text-base font-semibold text-[var(--brand-primary-deep)]">
             {unit.title}
           </p>
-          <span className="rounded-xl bg-white px-3 py-1 text-sm font-bold text-muted-foreground border border-[var(--brand-border)]">
-            {phase === "exercise" ? `${index + 1} / ${total}` : "Intro"}
+          <span className="rounded-xl border border-[var(--brand-border)] bg-white px-3 py-1 text-sm font-bold text-muted-foreground">
+            {phaseBadge}
           </span>
         </div>
-        <Progress value={progressValue} className="h-3.5 rounded-xl bg-[var(--brand-baby)]" />
+        <Progress
+          value={progressValue}
+          className="h-3.5 rounded-xl bg-[var(--brand-baby)]"
+        />
       </div>
 
       {phase === "tutorial" && (
@@ -100,6 +153,13 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           <p className="text-base leading-relaxed text-muted-foreground">
             {unit.tutorial.bodyJa}
           </p>
+          {hasTeach && (
+            <p className="rounded-2xl bg-[var(--brand-tint)] px-4 py-3 text-sm font-bold text-[var(--brand-primary-deep)]">
+              {locale === "ja"
+                ? "次は Learn：文字を1つずつ音声つきで教えます。クイズはそのあとです。"
+                : "Next is Learn: we teach each letter with audio. The quiz comes after."}
+            </p>
+          )}
           {unit.tutorial.tips && (
             <ul className="flex flex-col gap-2">
               {unit.tutorial.tips.map((tip) => (
@@ -115,6 +175,15 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
         </SoftPanel>
       )}
 
+      {phase === "teach" && teachCard && (
+        <TeachView
+          card={teachCard}
+          step={teachIndex + 1}
+          total={teachTotal}
+          locale={locale}
+        />
+      )}
+
       {phase === "exercise" && exercise && (
         <ExerciseView
           exercise={exercise}
@@ -126,7 +195,10 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
       )}
 
       {phase === "checkpoint" && (
-        <SoftPanel accent="sun" className="pop-in flex flex-col items-center gap-3 text-center">
+        <SoftPanel
+          accent="sun"
+          className="pop-in flex flex-col items-center gap-3 text-center"
+        >
           <LumiMascot size={140} mood="celebrate" />
           <h2 className="font-display text-3xl font-semibold text-[var(--brand-primary-deep)]">
             You did it!
@@ -164,9 +236,27 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           {phase === "tutorial" && (
             <Button
               className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
-              onClick={startExercises}
+              onClick={startFromTutorial}
             >
-              Let&apos;s go
+              {hasTeach
+                ? locale === "ja"
+                  ? "文字を覚える"
+                  : "Learn the letters"
+                : "Let's go"}
+            </Button>
+          )}
+          {phase === "teach" && (
+            <Button
+              className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
+              onClick={nextTeach}
+            >
+              {teachIndex + 1 >= teachTotal
+                ? locale === "ja"
+                  ? "練習クイズへ"
+                  : "Start practice quiz"
+                : locale === "ja"
+                  ? "次の文字"
+                  : "Next letter"}
             </Button>
           )}
           {phase === "exercise" && revealed && (
@@ -199,6 +289,74 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function TeachView({
+  card,
+  step,
+  total,
+  locale,
+}: {
+  card: TeachCard;
+  step: number;
+  total: number;
+  locale: "en" | "ja";
+}) {
+  const lang = (card.ttsLang ?? "ja-JP") as TtsLang;
+
+  return (
+    <SoftPanel className="pop-in flex flex-col gap-4">
+      <div className="flex items-center justify-between gap-2">
+        <span className="rounded-xl bg-[var(--brand-tint)] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[var(--brand-primary-deep)]">
+          {locale === "ja" ? "覚える" : "Learn"}
+        </span>
+        <span className="text-xs font-bold text-muted-foreground">
+          {step} / {total}
+        </span>
+      </div>
+
+      <div className="flex flex-col items-center gap-2 py-4 text-center">
+        <p
+          className="text-7xl font-semibold leading-none text-[var(--brand-primary-deep)] sm:text-8xl"
+          style={{ fontFamily: "var(--font-jp), \"Noto Sans JP\", sans-serif" }}
+        >
+          {card.glyph}
+        </p>
+        <p className="font-display text-2xl font-semibold tracking-wide text-[var(--brand-coral)]">
+          {card.reading}
+        </p>
+        <p className="text-sm font-medium text-muted-foreground">
+          {locale === "ja" ? "ローマ字の読み" : "Romaji spelling"}
+        </p>
+      </div>
+
+      <p className="text-base leading-relaxed">
+        {locale === "ja" ? card.tipJa : card.tipEn}
+      </p>
+      {locale === "ja" ? (
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {card.tipEn}
+        </p>
+      ) : (
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {card.tipJa}
+        </p>
+      )}
+
+      {card.ttsText && (
+        <AudioButton text={card.ttsText} lang={lang} label="Listen" />
+      )}
+
+      <div className="flex items-start gap-3 rounded-2xl bg-[var(--brand-mist)] px-4 py-3">
+        <LumiMascot size={56} mood="think" />
+        <p className="pt-1 text-sm font-medium leading-relaxed text-[var(--brand-primary-deep)]">
+          {locale === "ja"
+            ? "形を目で覚え、Listen で音を確認してから次へ。"
+            : "Look at the shape, tap Listen, say it once, then go to the next letter."}
+        </p>
+      </div>
+    </SoftPanel>
   );
 }
 
@@ -248,35 +406,35 @@ function ExerciseView({
         exercise.kind === "write-choice" ||
         exercise.kind === "listen-choice") &&
         exercise.choices && (
-        <div className="flex flex-col gap-2.5">
-          {exercise.choices.map((choice) => {
-            const isCorrect = choice.id === exercise.correctChoiceId;
-            const isSelected = choice.id === selected;
-            let tone =
-              "border-[var(--brand-border)] bg-[var(--brand-mist)] text-[var(--brand-ink)] active:bg-[var(--brand-mist)]";
-            if (revealed && isCorrect) {
-              tone =
-                "border-[var(--brand-primary)] bg-[var(--brand-tint)] text-[var(--brand-primary-deep)] ring-2 ring-[var(--brand-primary)]/30";
-            } else if (revealed && isSelected && !isCorrect) {
-              tone = "border-[#fb7185] bg-[#ffe4e8] text-[#9f1239]";
-            } else if (isSelected) {
-              tone = "border-[var(--brand-primary)] bg-[var(--brand-tint)]";
-            }
+          <div className="flex flex-col gap-2.5">
+            {exercise.choices.map((choice) => {
+              const isCorrect = choice.id === exercise.correctChoiceId;
+              const isSelected = choice.id === selected;
+              let tone =
+                "border-[var(--brand-border)] bg-[var(--brand-mist)] text-[var(--brand-ink)] active:bg-[var(--brand-mist)]";
+              if (revealed && isCorrect) {
+                tone =
+                  "border-[var(--brand-primary)] bg-[var(--brand-tint)] text-[var(--brand-primary-deep)] ring-2 ring-[var(--brand-primary)]/30";
+              } else if (revealed && isSelected && !isCorrect) {
+                tone = "border-[#fb7185] bg-[#ffe4e8] text-[#9f1239]";
+              } else if (isSelected) {
+                tone = "border-[var(--brand-primary)] bg-[var(--brand-tint)]";
+              }
 
-            return (
-              <button
-                key={choice.id}
-                type="button"
-                disabled={revealed}
-                onClick={() => onSelect(choice.id)}
-                className={`pressable min-h-14 rounded-2xl border-2 px-4 py-3 text-left text-base font-bold transition ${tone}`}
-              >
-                {choice.label}
-              </button>
-            );
-          })}
-        </div>
-      )}
+              return (
+                <button
+                  key={choice.id}
+                  type="button"
+                  disabled={revealed}
+                  onClick={() => onSelect(choice.id)}
+                  className={`pressable min-h-14 rounded-2xl border-2 px-4 py-3 text-left text-base font-bold transition ${tone}`}
+                >
+                  {choice.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
       {exercise.kind === "speak-prompt" && !revealed && (
         <p className="text-sm font-medium text-muted-foreground">
@@ -293,7 +451,7 @@ function ExerciseView({
           }`}
         >
           <p className="text-sm font-bold text-[var(--brand-primary-deep)]">
-            {justWrong ? "Almost. Here’s why" : "Great job. Here’s why"}
+            {justWrong ? "Almost. Here's why" : "Great job. Here's why"}
           </p>
           <p className="text-sm leading-relaxed">{exercise.explanationEn}</p>
           <p className="text-sm leading-relaxed text-muted-foreground">

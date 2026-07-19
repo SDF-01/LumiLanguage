@@ -20,6 +20,48 @@ export const japaneseHiraganaYouonUnit: LearningUnit = {
       "じ + ゃ makes じゃ (ja)",
     ],
   },
+  teach: [
+    {
+      glyph: "きゃ",
+      reading: "kya",
+      tipEn: "きゃ = kya. き + small ゃ as one beat.",
+      tipJa: "きゃ＝kya。き＋小さいゃで1拍。",
+      ttsText: "きゃ",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "しゃ",
+      reading: "sha",
+      tipEn: "しゃ = sha.",
+      tipJa: "しゃ＝sha。",
+      ttsText: "しゃ",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "ちゃ",
+      reading: "cha",
+      tipEn: "ちゃ = cha.",
+      tipJa: "ちゃ＝cha。",
+      ttsText: "ちゃ",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "にゃ",
+      reading: "nya",
+      tipEn: "にゃ = nya.",
+      tipJa: "にゃ＝nya。",
+      ttsText: "にゃ",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "じゃ",
+      reading: "ja",
+      tipEn: "じゃ = ja (じ + small ゃ).",
+      tipJa: "じゃ＝ja。",
+      ttsText: "じゃ",
+      ttsLang: "ja-JP",
+    },
+  ],
   exercises: [
     {
       id: "jp-youon-read",

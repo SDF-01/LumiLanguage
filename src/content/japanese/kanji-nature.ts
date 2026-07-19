@@ -20,6 +20,48 @@ export const japaneseKanjiNatureUnit: LearningUnit = {
       "日 and 月 appear in dates too",
     ],
   },
+  teach: [
+    {
+      glyph: "山",
+      reading: "yama",
+      tipEn: "山 = mountain. Three peaks.",
+      tipJa: "山＝yama。山のかたち。",
+      ttsText: "やま",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "川",
+      reading: "kawa",
+      tipEn: "川 = river. Flowing lines.",
+      tipJa: "川＝kawa。川の流れ。",
+      ttsText: "かわ",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "木",
+      reading: "ki",
+      tipEn: "木 = tree.",
+      tipJa: "木＝ki。",
+      ttsText: "き",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "水",
+      reading: "mizu",
+      tipEn: "水 = water.",
+      tipJa: "水＝mizu。",
+      ttsText: "みず",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "火",
+      reading: "hi",
+      tipEn: "火 = fire.",
+      tipJa: "火＝hi。",
+      ttsText: "ひ",
+      ttsLang: "ja-JP",
+    },
+  ],
   exercises: [
     {
       id: "jp-kn-1",

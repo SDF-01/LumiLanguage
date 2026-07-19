@@ -20,6 +20,48 @@ export const japaneseKanjiBasicsUnit: LearningUnit = {
       "Learn words, not only isolated characters",
     ],
   },
+  teach: [
+    {
+      glyph: "一",
+      reading: "ichi / hito(tsu)",
+      tipEn: "一 means one. One horizontal stroke.",
+      tipJa: "一は「いち」。横線1本。",
+      ttsText: "いち",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "二",
+      reading: "ni / futa(tsu)",
+      tipEn: "二 means two. Two strokes.",
+      tipJa: "二は「に」。横線2本。",
+      ttsText: "に",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "三",
+      reading: "san / mit(tsu)",
+      tipEn: "三 means three. Three strokes.",
+      tipJa: "三は「さん」。横線3本。",
+      ttsText: "さん",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "人",
+      reading: "hito / jin",
+      tipEn: "人 means person. Looks like a person walking.",
+      tipJa: "人は「ひと」。人の形。",
+      ttsText: "ひと",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "日",
+      reading: "hi / nichi",
+      tipEn: "日 means sun or day. A window of light.",
+      tipJa: "日は「ひ／にち」。太陽や日。",
+      ttsText: "ひ",
+      ttsLang: "ja-JP",
+    },
+  ],
   exercises: [
     {
       id: "jp-kj-1",

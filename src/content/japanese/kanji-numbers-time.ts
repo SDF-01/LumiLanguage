@@ -20,6 +20,48 @@ export const japaneseKanjiNumbersTimeUnit: LearningUnit = {
       "Dates use 月 and 日 after numbers",
     ],
   },
+  teach: [
+    {
+      glyph: "四",
+      reading: "yon / shi",
+      tipEn: "四 = four. Often yon when counting.",
+      tipJa: "四＝yon / shi。数えるときは yon が多い。",
+      ttsText: "よん",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "五",
+      reading: "go",
+      tipEn: "五 = five.",
+      tipJa: "五＝go。",
+      ttsText: "ご",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "十",
+      reading: "juu",
+      tipEn: "十 = ten. A cross.",
+      tipJa: "十＝juu。",
+      ttsText: "じゅう",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "年",
+      reading: "nen / toshi",
+      tipEn: "年 = year.",
+      tipJa: "年＝nen / toshi。",
+      ttsText: "ねん",
+      ttsLang: "ja-JP",
+    },
+    {
+      glyph: "月",
+      reading: "gatsu / tsuki",
+      tipEn: "月 = month or moon.",
+      tipJa: "月＝gatsu / tsuki。月や年月。",
+      ttsText: "つき",
+      ttsLang: "ja-JP",
+    },
+  ],
   exercises: [
     {
       id: "jp-knt-1",

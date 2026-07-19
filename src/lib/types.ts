@@ -39,6 +39,16 @@ export interface TutorialBlock {
   tips?: string[];
 }
 
+/** Shown in a Learn phase before quizzes (alphabet / kana teaching). */
+export interface TeachCard {
+  glyph: string;
+  reading: string;
+  tipEn: string;
+  tipJa: string;
+  ttsText?: string;
+  ttsLang?: "ja-JP" | "en-US";
+}
+
 export interface LearningUnit {
   id: string;
   pathId: PathId;
@@ -48,6 +58,8 @@ export interface LearningUnit {
   examPart?: string;
   xpReward: number;
   tutorial: TutorialBlock;
+  /** If set, learner studies these cards before any quiz. */
+  teach?: TeachCard[];
   exercises: Exercise[];
 }
 

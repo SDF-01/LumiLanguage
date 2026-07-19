@@ -1,102 +1,20 @@
-import type { LearningUnit } from "@/lib/types";
+import { createKanaLineUnit } from "@/content/japanese/kana-factory";
 
-export const japaneseKatakanaAUnit: LearningUnit = {
+export const japaneseKatakanaAUnit = createKanaLineUnit({
   id: "jp-katakana-a-line",
-  pathId: "japanese",
-  title: "Katakana ア行",
+  script: "katakana",
+  lineKey: "ア行",
   titleJa: "カタカナ ア行",
-  subtitle: "Read, write, speak, listen: アイウエオ",
-  xpReward: 110,
-  tutorial: {
-    title: "Why katakana?",
-    titleJa: "カタカナとは",
-    bodyEn:
-      "Katakana is used for foreign loanwords, onomatopoeia, and emphasis. Same vowels as hiragana, different shapes. Practice order: read, write, speak, listen.",
-    bodyJa:
-      "カタカナは外来語・擬音・強調などに使います。母音はひらがなと同じで形が違います。読む→書く→話す→聞くで練習します。",
-    tips: [
-      "ア looks more angular than あ",
-      "Loanwords often appear in katakana",
-      "Keep the same pure vowels as hiragana",
-    ],
-  },
-  exercises: [
+  chars: [
     {
-      id: "jp-kata-1",
-      kind: "multiple-choice",
-      skill: "read",
-      prompt: "Read: which is katakana 'a'?",
-      promptJa: "読む：カタカナの「a」は？",
-      choices: [
-        { id: "a", label: "ア" },
-        { id: "b", label: "イ" },
-        { id: "c", label: "あ" },
-        { id: "d", label: "ウ" },
-      ],
-      correctChoiceId: "a",
-      explanationEn: "ア is katakana a. あ is hiragana.",
-      explanationJa: "アがカタカナの a。あはひらがなです。",
+      kana: "ア",
+      romaji: "a",
+      tipEn: "ア is katakana a. More angular than hiragana あ.",
+      tipJa: "ア はカタカナの a。あより角ばっています。",
     },
-    {
-      id: "jp-kata-2",
-      kind: "write-choice",
-      skill: "write",
-      prompt: "Write: which katakana is 'i'?",
-      promptJa: "書く：「i」のカタカナは？",
-      choices: [
-        { id: "a", label: "ア" },
-        { id: "b", label: "イ" },
-        { id: "c", label: "エ" },
-        { id: "d", label: "オ" },
-      ],
-      correctChoiceId: "b",
-      explanationEn: "イ = i.",
-      explanationJa: "イ = i です。",
-    },
-    {
-      id: "jp-kata-3",
-      kind: "speak-prompt",
-      skill: "speak",
-      prompt: "Speak: say ウ.",
-      promptJa: "話す：ウ と言ってください。",
-      ttsText: "ウ",
-      ttsLang: "ja-JP",
-      explanationEn: "ウ = u.",
-      explanationJa: "ウ = u です。",
-    },
-    {
-      id: "jp-kata-4",
-      kind: "listen-choice",
-      skill: "listen",
-      prompt: "Listen: which character?",
-      promptJa: "聞く：どの文字？",
-      ttsText: "エ",
-      ttsLang: "ja-JP",
-      choices: [
-        { id: "a", label: "オ" },
-        { id: "b", label: "ア" },
-        { id: "c", label: "エ" },
-        { id: "d", label: "イ" },
-      ],
-      correctChoiceId: "c",
-      explanationEn: "エ = e.",
-      explanationJa: "エ = e です。",
-    },
-    {
-      id: "jp-kata-5",
-      kind: "write-choice",
-      skill: "write",
-      prompt: "Write: choose オ.",
-      promptJa: "書く：オ を選ぶ。",
-      choices: [
-        { id: "a", label: "ア" },
-        { id: "b", label: "イ" },
-        { id: "c", label: "ウ" },
-        { id: "d", label: "オ" },
-      ],
-      correctChoiceId: "d",
-      explanationEn: "オ = o.",
-      explanationJa: "オ = o です。",
-    },
+    { kana: "イ", romaji: "i", tipEn: "イ = i.", tipJa: "イ＝i。" },
+    { kana: "ウ", romaji: "u", tipEn: "ウ = u.", tipJa: "ウ＝u。" },
+    { kana: "エ", romaji: "e", tipEn: "エ = e.", tipJa: "エ＝e。" },
+    { kana: "オ", romaji: "o", tipEn: "オ = o.", tipJa: "オ＝o。" },
   ],
-};
+});

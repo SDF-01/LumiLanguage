@@ -1,6 +1,11 @@
-import type { Choice, LearningUnit } from "@/lib/types";
+import type { Choice, LearningUnit, TeachCard } from "@/lib/types";
 
-type KanaCell = { kana: string; romaji: string };
+type KanaCell = {
+  kana: string;
+  romaji: string;
+  tipEn?: string;
+  tipJa?: string;
+};
 
 function choicesFrom(chars: KanaCell[], order: number[]): Choice[] {
   const ids = ["a", "b", "c", "d"] as const;
@@ -19,6 +24,21 @@ function correctIdFor(
   return ids[Math.max(0, pos)] ?? "a";
 }
 
+function teachCardsFor(chars: KanaCell[]): TeachCard[] {
+  return chars.map((c) => ({
+    glyph: c.kana,
+    reading: c.romaji,
+    tipEn:
+      c.tipEn ??
+      `This is ${c.kana}. Say "${c.romaji}" while you look at the shape. Trace it top to bottom, left to right.`,
+    tipJa:
+      c.tipJa ??
+      `これは ${c.kana} です。形を見ながら「${c.romaji}」と言いましょう。上から下、左から右でなぞります。`,
+    ttsText: c.kana,
+    ttsLang: "ja-JP",
+  }));
+}
+
 export function createKanaLineUnit(options: {
   id: string;
   script: "hiragana" | "katakana";
@@ -29,6 +49,7 @@ export function createKanaLineUnit(options: {
 }): LearningUnit {
   const { id, script, lineKey, titleJa, chars, xpReward = 100 } = options;
   const scriptLabel = script === "hiragana" ? "Hiragana" : "Katakana";
+  const chart = chars.map((c) => `${c.kana} (${c.romaji})`).join(" · ");
   const n = chars.length;
   const i0 = 0;
   const i1 = Math.min(1, n - 1);
@@ -45,23 +66,22 @@ export function createKanaLineUnit(options: {
     pathId: "japanese",
     title: `${scriptLabel} ${lineKey}`,
     titleJa,
-    subtitle: `Read, write, speak, listen: ${chars.map((c) => c.kana).join("")}`,
+    subtitle: `Learn the alphabet first, then practice: ${chars.map((c) => c.kana).join("")}`,
     xpReward,
     tutorial: {
-      title: `${lineKey} line`,
-      titleJa,
-      bodyEn: `This lesson is the ${scriptLabel} ${lineKey} row. Memorize these shapes and sounds: ${chars
-        .map((c) => `${c.kana} = ${c.romaji}`)
-        .join(", ")}. Practice in order: read the romaji and pick the kana, write by choosing the form, speak it aloud, then listen and select what you hear.`,
-      bodyJa: `このレッスンは${titleJa}です。覚える文字と音：${chars
-        .map((c) => `${c.kana}＝${c.romaji}`)
-        .join("、")}。順番は読む（ローマ字→かな）→書く（形を選ぶ）→話す→聞くです。`,
+      title: `Learn ${lineKey} before the quiz`,
+      titleJa: `${titleJa}を先に覚える`,
+      bodyEn: `First you will learn each character one by one with audio: ${chart}. Only after that do the short quiz (read → write → speak → listen). Do not skip the Learn step.`,
+      bodyJa: `最初に1文字ずつ音声つきで覚えます：${chars
+        .map((c) => `${c.kana}（${c.romaji}）`)
+        .join("、")}。そのあと短いクイズ（読む→書く→話す→聞く）です。Learn を飛ばさないでください。`,
       tips: [
-        "Review the previous line for 2 minutes first",
-        "Say romaji, then look at the kana",
-        "Use Listen twice if needed",
+        "Study every character with Listen before the quiz",
+        "Say the romaji while looking at the kana",
+        "Stroke habit: top to bottom, left to right",
       ],
     },
+    teach: teachCardsFor(chars),
     exercises: [
       {
         id: `${id}-read`,

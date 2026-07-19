@@ -1,98 +1,15 @@
-import type { LearningUnit } from "@/lib/types";
+import { createKanaLineUnit } from "@/content/japanese/kana-factory";
 
-export const japaneseHiraganaKaUnit: LearningUnit = {
+export const japaneseHiraganaKaUnit = createKanaLineUnit({
   id: "jp-hiragana-ka-line",
-  pathId: "japanese",
-  title: "Hiragana か行",
+  script: "hiragana",
+  lineKey: "か行",
   titleJa: "ひらがな か行",
-  subtitle: "Read, write, speak, listen: かきくけこ",
-  xpReward: 100,
-  tutorial: {
-    title: "The K-line",
-    titleJa: "か行",
-    bodyEn:
-      "The か-line adds a K consonant before each vowel: ka, ki, ku, ke, ko. Follow read → write → speak → listen.",
-    bodyJa:
-      "か行は子音K＋母音です。か・き・く・け・こ。読む→書く→話す→聞くの順で練習します。",
-    tips: ["Contrast か vs が later", "き looks different from English 'ki' shape", "Practice with audio every time"],
-  },
-  exercises: [
-    {
-      id: "jp-ka-1",
-      kind: "multiple-choice",
-      skill: "read",
-      prompt: "Which kana is 'ka'?",
-      promptJa: "「ka」はどれ？",
-      choices: [
-        { id: "a", label: "き" },
-        { id: "b", label: "か" },
-        { id: "c", label: "く" },
-        { id: "d", label: "こ" },
-      ],
-      correctChoiceId: "b",
-      explanationEn: "か = ka.",
-      explanationJa: "か = ka です。",
-    },
-    {
-      id: "jp-ka-2",
-      kind: "write-choice",
-      skill: "write",
-      prompt: "Write: which kana is 'ki'?",
-      promptJa: "書く：「ki」はどれ？",
-      choices: [
-        { id: "a", label: "か" },
-        { id: "b", label: "き" },
-        { id: "c", label: "け" },
-        { id: "d", label: "こ" },
-      ],
-      correctChoiceId: "b",
-      explanationEn: "き = ki.",
-      explanationJa: "き = ki です。",
-    },
-    {
-      id: "jp-ka-3",
-      kind: "speak-prompt",
-      skill: "speak",
-      prompt: "Speak: say く after the audio.",
-      promptJa: "話す：く と言ってください。",
-      ttsText: "く",
-      ttsLang: "ja-JP",
-      explanationEn: "く = ku.",
-      explanationJa: "く = ku です。",
-    },
-    {
-      id: "jp-ka-4",
-      kind: "listen-choice",
-      skill: "listen",
-      prompt: "Listen: choose the kana you hear.",
-      promptJa: "聞く：聞こえたかなを選ぶ。",
-      ttsText: "け",
-      ttsLang: "ja-JP",
-      choices: [
-        { id: "a", label: "こ" },
-        { id: "b", label: "く" },
-        { id: "c", label: "け" },
-        { id: "d", label: "か" },
-      ],
-      correctChoiceId: "c",
-      explanationEn: "け = ke.",
-      explanationJa: "け = ke です。",
-    },
-    {
-      id: "jp-ka-5",
-      kind: "write-choice",
-      skill: "write",
-      prompt: "Write: choose こ.",
-      promptJa: "書く：こ を選ぶ。",
-      choices: [
-        { id: "a", label: "か" },
-        { id: "b", label: "き" },
-        { id: "c", label: "く" },
-        { id: "d", label: "こ" },
-      ],
-      correctChoiceId: "d",
-      explanationEn: "こ = ko.",
-      explanationJa: "こ = ko です。",
-    },
+  chars: [
+    { kana: "か", romaji: "ka", tipEn: "か = ka. K + a.", tipJa: "か＝ka。" },
+    { kana: "き", romaji: "ki", tipEn: "き = ki. K + i.", tipJa: "き＝ki。" },
+    { kana: "く", romaji: "ku", tipEn: "く = ku. K + u.", tipJa: "く＝ku。" },
+    { kana: "け", romaji: "ke", tipEn: "け = ke. K + e.", tipJa: "け＝ke。" },
+    { kana: "こ", romaji: "ko", tipEn: "こ = ko. K + o.", tipJa: "こ＝ko。" },
   ],
-};
+});
