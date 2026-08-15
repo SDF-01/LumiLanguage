@@ -56,6 +56,7 @@ export default function GetAppPage() {
         </p>
         <Button
           asChild
+          data-android-download
           className="pressable soft-shadow min-h-16 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
         >
           <a href={APK_DOWNLOAD_HREF} download="lumi-japanese.apk">

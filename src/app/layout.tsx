@@ -64,6 +64,13 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} ${jp.variable} h-full`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var C=window.Capacitor;var ua=navigator.userAgent||"";var host=location.hostname;var native=!!(C&&((C.isNativePlatform&&C.isNativePlatform())||(C.getPlatform&&C.getPlatform()!=="web")))||/Capacitor/i.test(ua)||((host==="localhost"||host==="capacitor")&&/; wv\\)/i.test(ua)&&/Android/i.test(ua));if(native)document.documentElement.setAttribute("data-lumi-native","1");}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-dvh flex flex-col font-[family-name:var(--font-body)]">
         <AppProviders>
           <SiteHeader />

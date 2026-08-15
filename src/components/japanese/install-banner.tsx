@@ -30,7 +30,10 @@ export function InstallBanner({ alwaysShow = false }: { alwaysShow?: boolean }) 
   if (hidden || nativeApp) return null;
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border-2 border-[var(--brand-border)] bg-white/95 px-4 py-3">
+    <div
+      data-android-download
+      className="flex flex-col gap-2 rounded-2xl border-2 border-[var(--brand-border)] bg-white/95 px-4 py-3"
+    >
       <p className="text-sm font-bold text-[var(--brand-primary-deep)]">
         {locale === "ja"
           ? "AndroidにLUMIを入れる：APKを直接ダウンロード"

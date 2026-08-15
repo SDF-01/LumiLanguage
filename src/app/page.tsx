@@ -89,6 +89,7 @@ export default function HomePage() {
           {!nativeApp && (
             <Button
               asChild
+              data-android-download
               className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white hover:bg-[#e56648]"
             >
               <Link href="/get-app">{t.home.getAndroid}</Link>

@@ -290,6 +290,10 @@
   }
 }
 
+html[data-lumi-native="1"] [data-android-download] {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blob-drift,
   .mascot-bounce,
