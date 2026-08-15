@@ -12,7 +12,7 @@ const en: Dictionary = {
     toeicLine:
       "One playful path for TOEIC 800+ and Japanese from zero.",
     japaneseLine:
-      "Train Listening and Reading for the real exam, then build Japanese from first sounds to kana, kanji, and phrases.",
+      "Train Listening and Reading for the real exam, then build Japanese from first sounds to kana tiles, mixed-script sentences, and workplace reading.",
     startLearning: "Start learning",
     quickQuiz: "Quick practice quiz",
     speakReadCta: "Speak & read Japanese",
@@ -64,6 +64,8 @@ const en: Dictionary = {
     sectionKanji: "KANJI",
     sectionPhrases: "PHRASES",
     sectionLife: "SPEAK LIFE",
+    sectionRead: "SENTENCE BUILD",
+    sectionPro: "PRO READ",
     wordsTitle: "Words of the day",
     wordsSubtitle:
       "5 hiragana, 5 katakana, and 5 kanji words with English explanations. New set each day.",
@@ -80,7 +82,21 @@ const en: Dictionary = {
       "Shadow Lumi, then speak into the mic. Android Chrome scores Japanese for you.",
     readLabTitle: "Reading lab",
     readLabSubtitle:
-      "Graded stories with furigana. Tap a word to hear it, then shadow the line.",
+      "Build sentences from tiles, then read graded stories. Furigana fades as you climb toward workplace Japanese.",
+    buildLabTitle: "Sentence workshop",
+    buildLabSubtitle:
+      "A question in English. Move hiragana, katakana, and kanji tiles into Japanese order. That is how reading starts.",
+    buildTray: "Your sentence",
+    buildBank: "Tiles",
+    buildCheck: "Check sentence",
+    buildClear: "Reset tiles",
+    buildEmpty: "Tap tiles below. Move them into this sentence.",
+    buildNext: "Next sentence",
+    readLadderTitle: "Reading ladder",
+    readWorkshopCta: "Build sentences",
+    readStoriesTitle: "Graded stories",
+    furiganaOn: "Furigana on",
+    furiganaOff: "Furigana off",
     reviewTitle: "Spaced review",
     reviewSubtitle: "Missed lines come back right when you are about to forget them.",
     chartTitle: "Gojuon chart",
@@ -124,7 +140,7 @@ const ja: Dictionary = {
   home: {
     toeicLine: "TOEIC 800点と日本語ゼロからの道を、ひとつで。",
     japaneseLine:
-      "本番のListening & Readingを鍛えつつ、音から仮名・漢字・フレーズまで日本語も学べます。",
+      "本番のListening & Readingを鍛えつつ、音からかなたイル、混ざった文、仕事の読解まで日本語も学べます。",
     startLearning: "学習をはじめる",
     quickQuiz: "かんたん練習クイズ",
     speakReadCta: "日本語を話す・読む",
@@ -176,6 +192,8 @@ const ja: Dictionary = {
     sectionKanji: "漢字",
     sectionPhrases: "フレーズ",
     sectionLife: "生活で話す",
+    sectionRead: "文づくり",
+    sectionPro: "仕事の読解",
     wordsTitle: "今日の単語",
     wordsSubtitle:
       "ひらがな・カタカナ・漢字を各5語。英語の意味と説明つき。毎日入れ替わります。",
@@ -191,7 +209,22 @@ const ja: Dictionary = {
     speakLabSubtitle:
       "ルミの後にシャドーイング。Android Chromeが日本語を採点します。",
     readLabTitle: "リーディングラボ",
-    readLabSubtitle: "ふりがな付きの段階別物語。単語をタップして聞いて、行を影読み。",
+    readLabSubtitle:
+      "タイルで文を組み立て、段階別の物語を読む。ふりがなを外して、仕事の日本語へ。",
+    buildLabTitle: "文づくり工房",
+    buildLabSubtitle:
+      "英語の問いを見て、ひらがな・カタカナ・漢字を正しい語順に並べます。読む力はここから。",
+    buildTray: "あなたの文",
+    buildBank: "タイル",
+    buildCheck: "文をチェック",
+    buildClear: "リセット",
+    buildEmpty: "下のタイルをタップして、ここに文を作ります。",
+    buildNext: "次の文",
+    readLadderTitle: "読解のはしご",
+    readWorkshopCta: "文を組み立てる",
+    readStoriesTitle: "段階別の物語",
+    furiganaOn: "ふりがなあり",
+    furiganaOff: "ふりがななし",
     reviewTitle: "間隔復習",
     reviewSubtitle: "間違えた行は、忘れそうなときに戻ってきます。",
     chartTitle: "五十音図",

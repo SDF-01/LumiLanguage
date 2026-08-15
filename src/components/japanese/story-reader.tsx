@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AudioButton } from "@/components/learning/audio-button";
 import { FuriganaLine } from "@/components/japanese/furigana-text";
+import { SentenceBuilder } from "@/components/japanese/sentence-builder";
 import { SpeakCoach } from "@/components/japanese/speak-coach";
 import { LumiMascot } from "@/components/brand/lumi-mascot";
 import { SoftPanel } from "@/components/brand/soft-panel";
@@ -22,6 +23,9 @@ export function StoryReader({ story }: { story: GradedStory }) {
   const [phase, setPhase] = useState<"read" | "quiz" | "done">("read");
   const [revealed, setRevealed] = useState(false);
   const [correct, setCorrect] = useState(0);
+  const [showReading, setShowReading] = useState(
+    story.furiganaDefault !== "off",
+  );
 
   const tokens = story.lines[line] ?? [];
   const lineTts = tokens
@@ -72,12 +76,19 @@ export function StoryReader({ story }: { story: GradedStory }) {
 
       {phase === "read" && (
         <SoftPanel className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-bold text-muted-foreground">
               {t.japanese.readLine} {line + 1}/{story.lines.length}
             </span>
+            <button
+              type="button"
+              className="rounded-xl border border-[var(--brand-border)] bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--brand-primary-deep)]"
+              onClick={() => setShowReading((value) => !value)}
+            >
+              {showReading ? t.japanese.furiganaOn : t.japanese.furiganaOff}
+            </button>
           </div>
-          <FuriganaLine tokens={tokens} />
+          <FuriganaLine tokens={tokens} showReading={showReading} />
           {lineTts && <AudioButton text={lineTts} lang="ja-JP" label={t.common.listen} />}
           <SpeakCoach
             expected={[lineTts, ...tokens.map((token) => token.reading ?? token.surface)]}
@@ -108,6 +119,25 @@ export function StoryReader({ story }: { story: GradedStory }) {
                 else queueFromExercise(exercise);
               }}
               disabled={revealed}
+            />
+          ) : exercise.kind === "sentence-build" &&
+            exercise.tiles &&
+            exercise.correctOrder ? (
+            <SentenceBuilder
+              key={exercise.id}
+              tiles={exercise.tiles}
+              correctOrder={exercise.correctOrder}
+              revealed={revealed}
+              onComplete={(ok) => {
+                setRevealed(true);
+                if (ok) setCorrect((value) => value + 1);
+                else queueFromExercise(exercise);
+              }}
+              checkLabel={t.japanese.buildCheck}
+              clearLabel={t.japanese.buildClear}
+              trayLabel={t.japanese.buildTray}
+              bankLabel={t.japanese.buildBank}
+              emptyLabel={t.japanese.buildEmpty}
             />
           ) : (
             <div className="flex flex-col gap-2">

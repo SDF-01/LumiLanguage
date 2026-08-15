@@ -56,6 +56,13 @@ import { japaneseDailyLifeUnit } from "@/content/japanese/daily-life";
 import { japaneseWeatherUnit } from "@/content/japanese/weather";
 import { japaneseKatakanaYouonUnit } from "@/content/japanese/katakana-youon";
 import { japaneseKanjiPeopleUnit } from "@/content/japanese/kanji-people";
+import {
+  japaneseProEmailUnit,
+  japaneseProMeetingUnit,
+  japaneseProNewsUnit,
+  japaneseSentenceFirstUnit,
+  japaneseSentenceMixUnit,
+} from "@/content/japanese/sentence-units";
 import { toeicBridgeUnit } from "@/content/toeic/foundations-bridge";
 import { toeicSoundsUnit } from "@/content/toeic/foundations-sounds";
 import { toeicWelcomeUnit } from "@/content/toeic/foundations-welcome";
@@ -148,6 +155,11 @@ const units: LearningUnit[] = [
   japaneseKanjiPeopleUnit,
   japaneseGreetingsUnit,
   japaneseParticlesUnit,
+  japaneseSentenceFirstUnit,
+  japaneseSentenceMixUnit,
+  japaneseProEmailUnit,
+  japaneseProNewsUnit,
+  japaneseProMeetingUnit,
   japaneseSelfIntroUnit,
   japaneseNumbersSpeakUnit,
   japaneseFamilyUnit,
@@ -203,7 +215,9 @@ export type PathSection =
   | "katakana"
   | "kanji"
   | "phrases"
-  | "life";
+  | "life"
+  | "readTrack"
+  | "proRead";
 
 export type PathNode = {
   id: string;
@@ -681,6 +695,41 @@ export const japanesePathNodes: PathNode[] = [
     section: "phrases",
   },
   {
+    id: "B1",
+    label: "Build first sentences",
+    labelJa: "はじめての文づくり",
+    unitId: japaneseSentenceFirstUnit.id,
+    section: "readTrack",
+  },
+  {
+    id: "B2",
+    label: "Mix hiragana, katakana, kanji",
+    labelJa: "3つの文字を混ぜる",
+    unitId: japaneseSentenceMixUnit.id,
+    section: "readTrack",
+  },
+  {
+    id: "W1",
+    label: "Read a work email",
+    labelJa: "仕事のメールを読む",
+    unitId: japaneseProEmailUnit.id,
+    section: "proRead",
+  },
+  {
+    id: "W2",
+    label: "Read a news headline",
+    labelJa: "ニュースの見出し",
+    unitId: japaneseProNewsUnit.id,
+    section: "proRead",
+  },
+  {
+    id: "W3",
+    label: "Read a meeting line",
+    labelJa: "会議の一言",
+    unitId: japaneseProMeetingUnit.id,
+    section: "proRead",
+  },
+  {
     id: "L1",
     label: "Speak: self-introduction",
     labelJa: "話す：自己紹介",
@@ -749,9 +798,9 @@ export const pathMeta = {
     title: "Japanese Quest",
     titleJa: "日本語クエスト",
     blurb:
-      "Speak and read from day one: real mic coaching, stroke writing, furigana stories, and teach-first kana. Everyday Japanese — not tap-only tiles.",
+      "Speak and read from day one: move kana and kanji tiles into real sentences, then climb from furigana stories to workplace email and news.",
     blurbJa:
-      "初日から話す・読む。音声認識、なぞり書き、ふりがな物語、先に教えるかな。タップだけの問題ではありません。",
+      "初日から話す・読む。かなと漢字のタイルで文を組み立て、ふりがな物語から仕事のメール・ニュースまで。",
     cta: "Continue Japanese path",
     ctaJa: "日本語コースへ",
     unitId: japaneseWelcomeUnit.id,

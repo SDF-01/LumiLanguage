@@ -59,6 +59,8 @@ export type Dictionary = {
     sectionKanji: string;
     sectionPhrases: string;
     sectionLife: string;
+    sectionRead: string;
+    sectionPro: string;
     wordsTitle: string;
     wordsSubtitle: string;
     nav: {
@@ -73,6 +75,19 @@ export type Dictionary = {
     speakLabSubtitle: string;
     readLabTitle: string;
     readLabSubtitle: string;
+    buildLabTitle: string;
+    buildLabSubtitle: string;
+    buildTray: string;
+    buildBank: string;
+    buildCheck: string;
+    buildClear: string;
+    buildEmpty: string;
+    buildNext: string;
+    readLadderTitle: string;
+    readWorkshopCta: string;
+    readStoriesTitle: string;
+    furiganaOn: string;
+    furiganaOff: string;
     reviewTitle: string;
     reviewSubtitle: string;
     chartTitle: string;

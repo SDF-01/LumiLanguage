@@ -16,6 +16,7 @@ export function skillFromKind(kind: ExerciseKind): SkillFocus {
       return "write";
     case "multiple-choice":
     case "match":
+    case "sentence-build":
       return "read";
     default: {
       const _exhaustive: never = kind;

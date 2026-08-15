@@ -12,6 +12,9 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 - **五十音図** — full chart with listen, speak, and trace.
 - **Pitch dots** — beginner-friendly high/low mora marks.
 - **Speak Life units** — self-intro, numbers, family, food, shopping, daily life, weather.
+- **Sentence build** — tap hiragana / katakana / kanji / particle tiles into SOV order from an English prompt. Color shows each script's job.
+- **Reading ladder** — kana sentences → mixed-script N5 → workplace email, news headlines, meeting frames.
+- **Furigana fade** — stories start with readings on; workplace mail defaults off.
 
 ## Path order (from zero)
 
@@ -20,7 +23,9 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 3. **Katakana** — full chart + dakuten + youon
 4. **Kanji** — meaning characters (people, nature, numbers)
 5. **Phrases** — greetings and particles
-6. **SPEAK LIFE** — everyday speaking/reading lines (unlocked after First phrases)
+6. **SENTENCE BUILD** — first SOV tiles, then mixed-script lines (unlocks after hiragana あ行)
+7. **PRO READ** — office email, news headline expansion, meeting lines (after mixed-script)
+8. **SPEAK LIFE** — everyday speaking/reading lines (unlocked after First phrases)
 
 ## Labs (bottom nav)
 
@@ -28,9 +33,11 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 | --- | --- | --- |
 | Learn | `/japanese` | Quest map + continue |
 | Speak | `/japanese/speak` | Shadow drills + dialogues |
-| Read | `/japanese/read` | Graded stories |
+| Read | `/japanese/read` | Ladder + workshop + graded stories |
 | Review | `/japanese/review` | Spaced repetition |
 | Chart | `/japanese/chart` | 五十音図 |
+
+Workshop: `/japanese/build` — free practice of every sentence-build item.
 
 ## Lesson skill order (units after foundations)
 
@@ -46,3 +53,12 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 - Katakana after basic hiragana `jp-hiragana-wa-line`
 - Kanji after `jp-hiragana-a-line`
 - Speak Life after `jp-welcome` so learners can talk on day one
+- Sentence build after `jp-hiragana-a-line`
+- Pro read after `jp-sentence-mix`
+
+## How reading becomes professional
+
+1. Recognize tiles by script color (hiragana grammar, kanji meaning, katakana loans).
+2. Rebuild the same frames in stories (school, station, convenience store).
+3. Recover omitted particles in headlines; keep です／ます in first-job email.
+4. Turn furigana off and still land on 会議, 確認, 議題.

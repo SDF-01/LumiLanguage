@@ -10,7 +10,17 @@ export type ExerciseKind =
   | "listen-choice"
   | "match"
   | "speak-prompt"
-  | "stroke-write";
+  | "stroke-write"
+  | "sentence-build";
+
+export type ScriptKind = "hiragana" | "katakana" | "kanji" | "particle";
+
+export interface SentenceTile {
+  id: string;
+  label: string;
+  script: ScriptKind;
+  reading?: string;
+}
 
 export interface Choice {
   id: string;
@@ -42,6 +52,10 @@ export interface Exercise {
   strokeGlyph?: string;
   /** Pairs for match-the-columns drills. */
   pairs?: MatchPair[];
+  /** Tiles to arrange into a sentence (includes distractors). */
+  tiles?: SentenceTile[];
+  /** Correct tile id order for sentence-build. */
+  correctOrder?: string[];
 }
 
 export interface TutorialBlock {
@@ -109,6 +123,7 @@ export interface GradedStory {
   synopsisJa: string;
   lines: ReadingToken[][];
   questions: Exercise[];
+  furiganaDefault?: "on" | "off";
 }
 
 export interface DialogueLine {

@@ -72,9 +72,11 @@ export default function JapanesePathPage() {
           </p>
           <div className="grid grid-cols-2 gap-2">
             <LabLink href={`/japanese/unit/${nextId}`} label={t.japanese.continuePath} />
+            <LabLink href="/japanese/build" label={t.japanese.readWorkshopCta} />
             <LabLink href="/japanese/speak" label={t.japanese.nav.speak} />
             <LabLink href="/japanese/read" label={t.japanese.nav.read} />
             <LabLink href="/japanese/review" label={`${t.japanese.nav.review}${due > 0 ? ` · ${due}` : ""}`} />
+            <LabLink href="/japanese/chart" label={t.japanese.nav.chart} />
           </div>
           <WordsOfTheDay
             title={t.japanese.wordsTitle}
@@ -95,6 +97,8 @@ export default function JapanesePathPage() {
         { title: t.japanese.sectionKatakana, nodes: nodesFor("katakana") },
         { title: t.japanese.sectionKanji, nodes: nodesFor("kanji") },
         { title: t.japanese.sectionPhrases, nodes: nodesFor("phrases") },
+        { title: t.japanese.sectionRead, nodes: nodesFor("readTrack") },
+        { title: t.japanese.sectionPro, nodes: nodesFor("proRead") },
         { title: t.japanese.sectionLife, nodes: nodesFor("life") },
       ]}
       primaryCta={{

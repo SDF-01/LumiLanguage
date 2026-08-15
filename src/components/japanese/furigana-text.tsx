@@ -7,9 +7,11 @@ import { haptic } from "@/lib/haptics";
 export function FuriganaLine({
   tokens,
   onSpeak,
+  showReading = true,
 }: {
   tokens: ReadingToken[];
   onSpeak?: (text: string) => void;
+  showReading?: boolean;
 }) {
   return (
     <p className="font-jp flex flex-wrap items-end gap-x-1 gap-y-3 text-2xl leading-none">
@@ -31,7 +33,7 @@ export function FuriganaLine({
               clickable ? "active:bg-[var(--brand-tint)]" : ""
             }`}
           >
-            {token.reading ? (
+            {showReading && token.reading ? (
               <span className="text-[0.65rem] font-bold text-[var(--brand-coral)]">
                 {token.reading}
               </span>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AudioButton } from "@/components/learning/audio-button";
 import { MatchBoard } from "@/components/japanese/match-board";
 import { PitchBar } from "@/components/japanese/pitch-bar";
+import { SentenceBuilder } from "@/components/japanese/sentence-builder";
 import { SpeakCoach } from "@/components/japanese/speak-coach";
 import { StrokePad } from "@/components/japanese/stroke-pad";
 import { LumiMascot } from "@/components/brand/lumi-mascot";
@@ -219,6 +220,7 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
 
       {phase === "exercise" && exercise && (
         <ExerciseView
+          key={exercise.id}
           exercise={exercise}
           selected={selected}
           revealed={revealed}
@@ -227,9 +229,15 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           onSpeak={onSpeakScore}
           onStroke={(ok) => finishItem(ok)}
           onMatch={() => finishItem(true)}
+          onBuild={(ok) => finishItem(ok)}
           listenLabel={t.japanese.listening}
           speakLabel={t.japanese.tapToSpeak}
           locale={locale}
+          trayLabel={t.japanese.buildTray}
+          bankLabel={t.japanese.buildBank}
+          checkLabel={t.japanese.buildCheck}
+          clearLabel={t.japanese.buildClear}
+          emptyLabel={t.japanese.buildEmpty}
         />
       )}
 
@@ -264,7 +272,17 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
                 asChild
                 className="pressable soft-shadow min-h-14 rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white"
               >
-                <Link href="/japanese/speak">Open speaking lab</Link>
+                <Link
+                  href={
+                    unit.exercises.some((item) => item.kind === "sentence-build")
+                      ? "/japanese/read"
+                      : "/japanese/speak"
+                  }
+                >
+                  {unit.exercises.some((item) => item.kind === "sentence-build")
+                    ? t.japanese.nav.read
+                    : t.japanese.speakLabTitle}
+                </Link>
               </Button>
             )}
             <Button
@@ -421,9 +439,15 @@ function ExerciseView({
   onSpeak,
   onStroke,
   onMatch,
+  onBuild,
   listenLabel,
   speakLabel,
   locale,
+  trayLabel,
+  bankLabel,
+  checkLabel,
+  clearLabel,
+  emptyLabel,
 }: {
   exercise: Exercise;
   selected: string | null;
@@ -433,9 +457,15 @@ function ExerciseView({
   onSpeak: (score: SpeechScore) => void;
   onStroke: (ok: boolean) => void;
   onMatch: () => void;
+  onBuild: (ok: boolean) => void;
   listenLabel: string;
   speakLabel: string;
   locale: "en" | "ja";
+  trayLabel: string;
+  bankLabel: string;
+  checkLabel: string;
+  clearLabel: string;
+  emptyLabel: string;
 }) {
   const lang = (exercise.ttsLang ?? "en-US") as TtsLang;
 
@@ -461,7 +491,8 @@ function ExerciseView({
       </div>
 
       {(exercise.kind === "listen-choice" ||
-        exercise.kind === "speak-prompt") &&
+        exercise.kind === "speak-prompt" ||
+        exercise.kind === "sentence-build") &&
         exercise.ttsText && (
           <AudioButton text={exercise.ttsText} lang={lang} label="Listen" />
         )}
@@ -498,6 +529,22 @@ function ExerciseView({
           onComplete={onMatch}
         />
       )}
+
+      {exercise.kind === "sentence-build" &&
+        exercise.tiles &&
+        exercise.correctOrder && (
+          <SentenceBuilder
+            tiles={exercise.tiles}
+            correctOrder={exercise.correctOrder}
+            revealed={revealed}
+            onComplete={onBuild}
+            checkLabel={checkLabel}
+            clearLabel={clearLabel}
+            trayLabel={trayLabel}
+            bankLabel={bankLabel}
+            emptyLabel={emptyLabel}
+          />
+        )}
 
       {(exercise.kind === "multiple-choice" ||
         exercise.kind === "write-choice" ||
@@ -554,6 +601,18 @@ function ExerciseView({
           <p className="text-sm font-bold text-[var(--brand-primary-deep)]">
             {justWrong ? "Almost. Here's why" : "Great job. Here's why"}
           </p>
+          {exercise.kind === "sentence-build" &&
+            exercise.tiles &&
+            exercise.correctOrder && (
+              <p className="font-jp text-xl font-semibold text-[var(--brand-primary-deep)]">
+                {exercise.correctOrder
+                  .map(
+                    (id) =>
+                      exercise.tiles?.find((tile) => tile.id === id)?.label ?? "",
+                  )
+                  .join("")}
+              </p>
+            )}
           <p className="text-sm leading-relaxed">{exercise.explanationEn}</p>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {exercise.explanationJa}

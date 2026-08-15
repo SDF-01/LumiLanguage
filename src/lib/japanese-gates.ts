@@ -33,6 +33,12 @@ export function isJapaneseNodeLocked(
     case "life":
       if (!completed.includes("jp-welcome")) return true;
       return !prevInSectionCompleted(node, completed);
+    case "readTrack":
+      if (!completed.includes("jp-hiragana-a-line")) return true;
+      return !prevInSectionCompleted(node, completed);
+    case "proRead":
+      if (!completed.includes("jp-sentence-mix")) return true;
+      return !prevInSectionCompleted(node, completed);
     case "vocab":
     case "reading":
     case "grammar":
@@ -68,6 +74,14 @@ export function japaneseLockHint(
       return locale === "ja"
         ? "ロック：はじめてのフレーズを完了すると解放"
         : "Locked: finish First phrases, then speak every day";
+    case "readTrack":
+      return locale === "ja"
+        ? "ロック：ひらがな あ行を完了すると文づくりが開く"
+        : "Locked: finish hiragana あ行, then build sentences";
+    case "proRead":
+      return locale === "ja"
+        ? "ロック：3つの文字を混ぜるレッスンを完了"
+        : "Locked: finish Mix the three scripts first";
     case "startHere":
       return locale === "ja"
         ? "ロック：ひとつ前のレッスンを完了"
