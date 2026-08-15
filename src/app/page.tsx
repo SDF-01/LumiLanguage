@@ -4,10 +4,12 @@ import Link from "next/link";
 import { LumiMascot } from "@/components/brand/lumi-mascot";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/lib/brand";
+import { useNativeApp } from "@/lib/client-store";
 import { useLocale } from "@/lib/i18n/locale-context";
 
 export default function HomePage() {
   const { t, locale } = useLocale();
+  const nativeApp = useNativeApp();
 
   return (
     <section className="relative flex min-h-[calc(100dvh-3rem-env(safe-area-inset-top))] flex-1 flex-col overflow-hidden">
@@ -84,12 +86,14 @@ export default function HomePage() {
           >
             <Link href="/japanese">{t.home.speakReadCta}</Link>
           </Button>
-          <Button
-            asChild
-            className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white hover:bg-[#e56648]"
-          >
-            <Link href="/get-app">{t.home.getAndroid}</Link>
-          </Button>
+          {!nativeApp && (
+            <Button
+              asChild
+              className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white hover:bg-[#e56648]"
+            >
+              <Link href="/get-app">{t.home.getAndroid}</Link>
+            </Button>
+          )}
           <Button
             asChild
             variant="secondary"

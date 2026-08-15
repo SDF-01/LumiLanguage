@@ -39,6 +39,8 @@ npm run android:apk
 
 That exports the Next.js app, wraps it with Capacitor, and writes a signed APK to `public/downloads/lumi-japanese.apk`. The sideload keystore lives in `android/keystore/` — replace it before a Play Store upload.
 
+The launcher icon is Lumi the owl (same mark as the website). Inside the installed app, download-for-Android buttons are hidden. Regenerate icons with `npm run icons:lumi`.
+
 ## Project docs
 
 - `specs/PLAN.md` — execution plan

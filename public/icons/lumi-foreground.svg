@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <rect width="512" height="512" rx="112" fill="#40C8C8"/>
-  <g transform="translate(36, 8) scale(2.2)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" fill="none">
+  <g transform="translate(150, 90) scale(3.9)">
     <ellipse cx="100" cy="118" rx="54" ry="58" fill="#40c8c8"/>
     <ellipse cx="100" cy="128" rx="38" ry="40" fill="#d7f3f8"/>
     <circle cx="88" cy="120" r="3.5" fill="#b8e4f0"/>

@@ -10,7 +10,8 @@
     "generate:daily-words": "node scripts/generate-daily-words.mjs",
     "android:export": "ANDROID_EXPORT=1 next build",
     "android:sync": "ANDROID_EXPORT=1 next build && rm -rf out/downloads && npx cap sync android",
-    "android:apk": "bash scripts/build-android-apk.sh"
+    "android:apk": "bash scripts/build-android-apk.sh",
+    "icons:lumi": "node scripts/generate-lumi-icons.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^7.6.8",

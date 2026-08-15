@@ -9,6 +9,7 @@ import {
   loadProgress,
   subscribeProgress,
 } from "@/lib/progress";
+import { isNativeApp } from "@/lib/android";
 import { isSpeechRecognitionSupported } from "@/lib/speech";
 import { loadSrs, subscribeSrs } from "@/lib/srs";
 import type { ProgressState, SrsCard } from "@/lib/types";
@@ -30,6 +31,14 @@ export function useAlphabetMastery(): Record<string, GlyphMastery> {
     subscribeAlphabetMastery,
     loadAlphabetMastery,
     () => ({}),
+  );
+}
+
+export function useNativeApp(): boolean {
+  return useSyncExternalStore(
+    () => () => undefined,
+    isNativeApp,
+    () => false,
   );
 }
 

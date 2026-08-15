@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { APK_DOWNLOAD_HREF } from "@/lib/android";
+import { useNativeApp } from "@/lib/client-store";
 import { useLocale } from "@/lib/i18n/locale-context";
 
 type BeforeInstallPromptEvent = Event & {
@@ -13,6 +14,7 @@ type BeforeInstallPromptEvent = Event & {
 
 export function InstallBanner({ alwaysShow = false }: { alwaysShow?: boolean }) {
   const { locale, t } = useLocale();
+  const nativeApp = useNativeApp();
   const [event, setEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [hidden, setHidden] = useState(false);
 
@@ -25,7 +27,7 @@ export function InstallBanner({ alwaysShow = false }: { alwaysShow?: boolean }) 
     return () => window.removeEventListener("beforeinstallprompt", onPrompt);
   }, []);
 
-  if (hidden) return null;
+  if (hidden || nativeApp) return null;
 
   return (
     <div className="flex flex-col gap-2 rounded-2xl border-2 border-[var(--brand-border)] bg-white/95 px-4 py-3">

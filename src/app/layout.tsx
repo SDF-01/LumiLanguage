@@ -29,6 +29,13 @@ export const metadata: Metadata = {
   title: `${brand.name} | Speak & read Japanese`,
   description: brand.description,
   applicationName: brand.name,
+  icons: {
+    icon: [
+      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/icon-192.png", sizes: "192x192" }],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

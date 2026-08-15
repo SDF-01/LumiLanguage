@@ -6,16 +6,40 @@ import { SoftPanel } from "@/components/brand/soft-panel";
 import { InstallBanner } from "@/components/japanese/install-banner";
 import { Button } from "@/components/ui/button";
 import { APK_DOWNLOAD_HREF } from "@/lib/android";
+import { useNativeApp } from "@/lib/client-store";
 import { useLocale } from "@/lib/i18n/locale-context";
 
 export default function GetAppPage() {
   const { t } = useLocale();
+  const nativeApp = useNativeApp();
   const steps = [
     t.getApp.step1,
     t.getApp.step2,
     t.getApp.step3,
     t.getApp.step4,
   ];
+
+  if (nativeApp) {
+    return (
+      <div className="mx-auto flex w-full max-w-lg flex-col gap-4 px-4 py-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+        <SoftPanel className="flex flex-col items-center gap-3 text-center">
+          <LumiMascot size={120} mood="cheer" />
+          <h1 className="font-display text-3xl font-semibold text-[var(--brand-primary-deep)]">
+            {t.getApp.alreadyTitle}
+          </h1>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {t.getApp.alreadyBody}
+          </p>
+          <Button
+            asChild
+            className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white"
+          >
+            <Link href="/japanese">{t.home.speakReadCta}</Link>
+          </Button>
+        </SoftPanel>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-lg flex-col gap-4 px-4 py-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">

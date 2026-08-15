@@ -34,6 +34,8 @@ const en: Dictionary = {
       "Chrome can also pin LUMI to your home screen. The APK is the direct app install.",
     pwaCta: "Use browser install",
     note: "Sideload build for learning. Replace the keystore before a Play Store upload.",
+    alreadyTitle: "You're in the LUMI app",
+    alreadyBody: "This is the Android app. No download needed — start speaking and reading.",
   },
   paths: {
     title: "Pick your adventure",
@@ -179,6 +181,8 @@ const ja: Dictionary = {
       "Chromeでもホーム画面に追加できます。APKのほうが直接インストールです。",
     pwaCta: "ブラウザで追加",
     note: "学習用のサイドロード版です。Playストア公開前にキーストアを替えてください。",
+    alreadyTitle: "LUMIアプリの中です",
+    alreadyBody: "これはAndroidアプリです。ダウンロードは不要。話す・読むを始めましょう。",
   },
   paths: {
     title: "コースを選ぶ",

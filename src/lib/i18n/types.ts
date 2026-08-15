@@ -30,6 +30,8 @@ export type Dictionary = {
     pwaBody: string;
     pwaCta: string;
     note: string;
+    alreadyTitle: string;
+    alreadyBody: string;
   };
   paths: {
     title: string;
