@@ -13,6 +13,7 @@ Android-first beginner Japanese that teaches speaking and reading for real, not 
 7. **Kana chart** — full gojuon + dakuten + youon
 8. **PWA** — install to Android home screen, bottom nav, haptics
 9. **Gates** — sequential unlock, but life speaking opens after First phrases
+10. **Android APK** — Capacitor wrap + signed sideload package at `/get-app` and `public/downloads/lumi-japanese.apk`
 
 ## Prior waves (done)
 
