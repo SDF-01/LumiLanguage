@@ -7,9 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:daily-words": "node scripts/generate-daily-words.mjs"
+    "generate:daily-words": "node scripts/generate-daily-words.mjs",
+    "android:export": "ANDROID_EXPORT=1 next build",
+    "android:sync": "ANDROID_EXPORT=1 next build && rm -rf out/downloads && npx cap sync android",
+    "android:apk": "bash scripts/build-android-apk.sh"
   },
   "dependencies": {
+    "@capacitor/core": "^7.6.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.25.0",
@@ -27,6 +31,8 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@capacitor/android": "^7.6.8",
+    "@capacitor/cli": "^7.6.8",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

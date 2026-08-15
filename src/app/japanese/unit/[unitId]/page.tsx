@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import { UnitPlayer } from "@/components/learning/unit-player";
-import { getUnit } from "@/content/catalog";
+import { getUnit, getUnitsForPath } from "@/content/catalog";
+
+export function generateStaticParams() {
+  return getUnitsForPath("japanese").map((unit) => ({ unitId: unit.id }));
+}
 
 export default async function JapaneseUnitPage({
   params,

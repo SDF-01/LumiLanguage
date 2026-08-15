@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import { DialoguePlayer } from "@/components/japanese/dialogue-player";
-import { getDialogue } from "@/content/japanese/dialogues";
+import { getDialogue, japaneseDialogues } from "@/content/japanese/dialogues";
+
+export function generateStaticParams() {
+  return japaneseDialogues.map((scene) => ({ dialogueId: scene.id }));
+}
 
 export default async function DialoguePage({
   params,

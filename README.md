@@ -22,6 +22,23 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Use phone width in DevTools for the intended layout.
 
+## Android app (direct APK)
+
+LUMI ships as a sideloadable Android package (`com.lumi.japanese`).
+
+1. On your phone, open `/get-app` and tap **Download LUMI.apk**, or grab `public/downloads/lumi-japanese.apk`.
+2. Allow the browser/Files app to install unknown apps.
+3. Tap the APK → **Install** → open **LUMI**.
+
+Rebuild the package after lesson changes:
+
+```bash
+# Needs JDK 17+ and Android SDK (ANDROID_HOME)
+npm run android:apk
+```
+
+That exports the Next.js app, wraps it with Capacitor, and writes a signed APK to `public/downloads/lumi-japanese.apk`. The sideload keystore lives in `android/keystore/` — replace it before a Play Store upload.
+
 ## Project docs
 
 - `specs/PLAN.md` — execution plan

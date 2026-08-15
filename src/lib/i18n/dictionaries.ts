@@ -16,6 +16,24 @@ const en: Dictionary = {
     startLearning: "Start learning",
     quickQuiz: "Quick practice quiz",
     speakReadCta: "Speak & read Japanese",
+    getAndroid: "Download Android app",
+  },
+  getApp: {
+    title: "Get LUMI on Android",
+    subtitle:
+      "Install the real APK. It opens as its own app, with speak, read, and offline lessons.",
+    downloadApk: "Download LUMI.apk",
+    fileLabel: "Android package · tap to install",
+    stepsTitle: "Install in four taps",
+    step1: "Tap Download LUMI.apk on this phone.",
+    step2: "If Android asks, allow Chrome (or Files) to install unknown apps.",
+    step3: "Open the downloaded file and tap Install.",
+    step4: "Open LUMI and start speaking Japanese.",
+    pwaTitle: "Or add the website",
+    pwaBody:
+      "Chrome can also pin LUMI to your home screen. The APK is the direct app install.",
+    pwaCta: "Use browser install",
+    note: "Sideload build for learning. Replace the keystore before a Play Store upload.",
   },
   paths: {
     title: "Pick your adventure",
@@ -110,6 +128,24 @@ const ja: Dictionary = {
     startLearning: "学習をはじめる",
     quickQuiz: "かんたん練習クイズ",
     speakReadCta: "日本語を話す・読む",
+    getAndroid: "Androidアプリを入手",
+  },
+  getApp: {
+    title: "AndroidでLUMIを入れる",
+    subtitle:
+      "本物のAPKを入れます。話す・読む・レッスンがアプリとして開きます。",
+    downloadApk: "LUMI.apk をダウンロード",
+    fileLabel: "Androidパッケージ・タップしてインストール",
+    stepsTitle: "4タップでインストール",
+    step1: "このスマホで「LUMI.apk をダウンロード」をタップ。",
+    step2: "聞かれたら、Chrome（またはファイル）に提供元不明アプリの許可。",
+    step3: "ダウンロードしたファイルを開き、インストール。",
+    step4: "LUMIを開いて、日本語を話し始めましょう。",
+    pwaTitle: "サイトをホームに追加",
+    pwaBody:
+      "Chromeでもホーム画面に追加できます。APKのほうが直接インストールです。",
+    pwaCta: "ブラウザで追加",
+    note: "学習用のサイドロード版です。Playストア公開前にキーストアを替えてください。",
   },
   paths: {
     title: "コースを選ぶ",

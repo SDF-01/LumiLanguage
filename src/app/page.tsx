@@ -86,6 +86,12 @@ export default function HomePage() {
           </Button>
           <Button
             asChild
+            className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white hover:bg-[#e56648]"
+          >
+            <Link href="/get-app">{t.home.getAndroid}</Link>
+          </Button>
+          <Button
+            asChild
             variant="secondary"
             className="pressable min-h-12 w-full rounded-2xl border-2 border-[var(--brand-border)] bg-white/85 text-sm font-bold text-[var(--brand-primary-deep)] backdrop-blur-sm"
           >

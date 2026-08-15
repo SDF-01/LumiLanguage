@@ -17,6 +17,17 @@
 /.next/
 /out/
 
+# Android / Capacitor build junk (keep android/ source)
+/android/.gradle/
+/android/build/
+/android/app/build/
+/android/app/release/
+/android/local.properties
+/android/app/src/main/assets/public/
+/android/captures/
+/android/*.iml
+/android/.idea/
+
 # production
 /build
 

@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import { StoryReader } from "@/components/japanese/story-reader";
-import { getStory } from "@/content/japanese/stories";
+import { getStory, japaneseStories } from "@/content/japanese/stories";
+
+export function generateStaticParams() {
+  return japaneseStories.map((story) => ({ storyId: story.id }));
+}
 
 export default async function StoryPage({
   params,

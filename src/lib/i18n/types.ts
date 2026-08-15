@@ -14,6 +14,22 @@ export type Dictionary = {
     startLearning: string;
     quickQuiz: string;
     speakReadCta: string;
+    getAndroid: string;
+  };
+  getApp: {
+    title: string;
+    subtitle: string;
+    downloadApk: string;
+    fileLabel: string;
+    stepsTitle: string;
+    step1: string;
+    step2: string;
+    step3: string;
+    step4: string;
+    pwaTitle: string;
+    pwaBody: string;
+    pwaCta: string;
+    note: string;
   };
   paths: {
     title: string;
