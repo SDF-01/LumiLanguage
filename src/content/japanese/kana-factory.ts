@@ -1,4 +1,5 @@
-import type { Choice, LearningUnit, TeachCard } from "@/lib/types";
+import type { Choice, Exercise, LearningUnit, TeachCard } from "@/lib/types";
+import { distractorKana, distractorRomaji } from "@/lib/kana-lookalikes";
 
 type KanaCell = {
   kana: string;
@@ -7,21 +8,32 @@ type KanaCell = {
   tipJa?: string;
 };
 
-function choicesFrom(chars: KanaCell[], order: number[]): Choice[] {
-  const ids = ["a", "b", "c", "d"] as const;
-  return order.slice(0, 4).map((charIndex, i) => ({
-    id: ids[i],
-    label: chars[charIndex]?.kana ?? chars[0].kana,
-  }));
+function shuffle<T>(items: T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const current = copy[i];
+    const swap = copy[j];
+    if (current !== undefined && swap !== undefined) {
+      copy[i] = swap;
+      copy[j] = current;
+    }
+  }
+  return copy;
 }
 
-function correctIdFor(
-  order: number[],
-  targetIndex: number,
-): "a" | "b" | "c" | "d" {
-  const pos = order.indexOf(targetIndex);
+function labeledChoices(
+  correct: string,
+  distractors: string[],
+): { choices: Choice[]; correctChoiceId: string } {
+  const labels = shuffle([correct, ...distractors.slice(0, 3)]);
   const ids = ["a", "b", "c", "d"] as const;
-  return ids[Math.max(0, pos)] ?? "a";
+  const choices = labels.map((label, index) => ({
+    id: ids[index] ?? "a",
+    label,
+  }));
+  const hit = choices.find((choice) => choice.label === correct);
+  return { choices, correctChoiceId: hit?.id ?? "a" };
 }
 
 function teachCardsFor(chars: KanaCell[]): TeachCard[] {
@@ -30,10 +42,10 @@ function teachCardsFor(chars: KanaCell[]): TeachCard[] {
     reading: c.romaji,
     tipEn:
       c.tipEn ??
-      `This is ${c.kana}. Say "${c.romaji}" while you look at the shape. Trace it top to bottom, left to right.`,
+      `Cover the romaji. ${c.kana} is "${c.romaji}". Look, say it, then trace top to bottom, left to right.`,
     tipJa:
       c.tipJa ??
-      `これは ${c.kana} です。形を見ながら「${c.romaji}」と言いましょう。上から下、左から右でなぞります。`,
+      `ローマ字を隠して ${c.kana} を「${c.romaji}」と言う。上から下、左から右でなぞる。`,
     ttsText: c.kana,
     ttsLang: "ja-JP",
   }));
@@ -47,102 +59,111 @@ export function createKanaLineUnit(options: {
   chars: KanaCell[];
   xpReward?: number;
 }): LearningUnit {
-  const { id, script, lineKey, titleJa, chars, xpReward = 100 } = options;
+  const { id, script, lineKey, titleJa, chars, xpReward = 140 } = options;
   const scriptLabel = script === "hiragana" ? "Hiragana" : "Katakana";
-  const chart = chars.map((c) => `${c.kana} (${c.romaji})`).join(" · ");
-  const n = chars.length;
-  const i0 = 0;
-  const i1 = Math.min(1, n - 1);
-  const i2 = Math.min(2, n - 1);
-  const iLast = n - 1;
+  const chart = chars.map((c) => c.kana).join(" ");
 
-  const readOrder = [i0, i1, i2, iLast];
-  const writeOrder = [iLast, i0, i2, i1];
-  const listenOrder = [i0, i2, iLast, i1];
-  const write2Order = [i1, i2, i0, iLast];
+  const exercises: Exercise[] = [];
+
+  for (const cell of chars) {
+    const sound = labeledChoices(
+      cell.romaji,
+      distractorRomaji(cell.romaji, script, 8),
+    );
+    exercises.push({
+      id: `${id}-sound-${cell.romaji}`,
+      kind: "multiple-choice",
+      skill: "read",
+      prompt: `No romaji. What sound is ${cell.kana}?`,
+      promptJa: `ローマ字なし。${cell.kana} の音は？`,
+      choices: sound.choices,
+      correctChoiceId: sound.correctChoiceId,
+      explanationEn: `${cell.kana} = ${cell.romaji}.`,
+      explanationJa: `${cell.kana} = ${cell.romaji}。`,
+    });
+
+    const glyph = labeledChoices(cell.kana, distractorKana(cell.kana, script, 8));
+    exercises.push({
+      id: `${id}-glyph-${cell.romaji}`,
+      kind: "multiple-choice",
+      skill: "read",
+      prompt: `Which character is "${cell.romaji}"? Lookalikes are mixed in.`,
+      promptJa: `「${cell.romaji}」はどれ？似ている字が混ざっています。`,
+      choices: glyph.choices,
+      correctChoiceId: glyph.correctChoiceId,
+      explanationEn: `${cell.romaji} is ${cell.kana}.`,
+      explanationJa: `${cell.romaji} は ${cell.kana}。`,
+    });
+  }
+
+  const strokeTargets = chars.slice(0, Math.min(chars.length, 3));
+  for (const cell of strokeTargets) {
+    exercises.push({
+      id: `${id}-stroke-${cell.romaji}`,
+      kind: "stroke-write",
+      skill: "write",
+      prompt: `Trace ${cell.kana}. Do not look at romaji — feel the stroke order.`,
+      promptJa: `${cell.kana} をなぞる。ローマ字は見ない。`,
+      strokeGlyph: cell.kana,
+      explanationEn: `${cell.kana} = ${cell.romaji}.`,
+      explanationJa: `${cell.kana} = ${cell.romaji}。`,
+    });
+  }
+
+  const listenTargets = chars.slice(-Math.min(chars.length, 2));
+  for (const cell of listenTargets) {
+    const listen = labeledChoices(cell.kana, distractorKana(cell.kana, script, 8));
+    exercises.push({
+      id: `${id}-listen-${cell.romaji}`,
+      kind: "listen-choice",
+      skill: "listen",
+      prompt: "Listen. Pick the character — not the romaji.",
+      promptJa: "聞いて、文字を選ぶ。ローマ字ではない。",
+      ttsText: cell.kana,
+      ttsLang: "ja-JP",
+      choices: listen.choices,
+      correctChoiceId: listen.correctChoiceId,
+      explanationEn: `You heard ${cell.kana} (${cell.romaji}).`,
+      explanationJa: `${cell.kana}（${cell.romaji}）が聞こえました。`,
+    });
+  }
+
+  const speakCell = chars[Math.min(2, chars.length - 1)] ?? chars[0];
+  if (speakCell) {
+    exercises.push({
+      id: `${id}-speak`,
+      kind: "speak-prompt",
+      skill: "speak",
+      prompt: `Say this character. Cover any romanization: ${speakCell.kana}`,
+      promptJa: `ローマ字を隠して ${speakCell.kana} と言う。`,
+      ttsText: speakCell.kana,
+      ttsLang: "ja-JP",
+      expectedSpeech: [speakCell.kana, speakCell.romaji],
+      explanationEn: `${speakCell.kana} = ${speakCell.romaji}.`,
+      explanationJa: `${speakCell.kana} = ${speakCell.romaji}。`,
+    });
+  }
 
   return {
     id,
     pathId: "japanese",
     title: `${scriptLabel} ${lineKey}`,
     titleJa,
-    subtitle: `Learn the alphabet first, then practice: ${chars.map((c) => c.kana).join("")}`,
+    subtitle: `Learn every letter, then recall ${chart} without free romaji`,
     xpReward,
     tutorial: {
-      title: `Learn ${lineKey} before the quiz`,
-      titleJa: `${titleJa}を先に覚える`,
-      bodyEn: `First you will learn each character one by one with audio: ${chart}. Only after that do the short quiz (read → write → speak → listen). Do not skip the Learn step.`,
-      bodyJa: `最初に1文字ずつ音声つきで覚えます：${chars
-        .map((c) => `${c.kana}（${c.romaji}）`)
-        .join("、")}。そのあと短いクイズ（読む→書く→話す→聞く）です。Learn を飛ばさないでください。`,
+      title: `Learn ${lineKey} — then prove it`,
+      titleJa: `${titleJa}を覚えてから試す`,
+      bodyEn: `Study each character with audio first: ${chart}. The quiz asks every letter both ways (sound from shape, shape from sound) and mixes lookalikes. Romaji is not printed on the answers.`,
+      bodyJa: `先に1文字ずつ音声で覚えます：${chart}。クイズは全文字を「形→音」と「音→形」の両方で出し、似ている字を混ぜます。答えにローマ字は書きません。`,
       tips: [
-        "Study every character with Listen before the quiz",
-        "Say the romaji while looking at the kana",
-        "Stroke habit: top to bottom, left to right",
+        "Cover the reading on the Learn cards after the first look",
+        "ね／れ／わ and シ／ツ／ン are the traps — slow down",
+        "Trace after you can name the sound from the shape alone",
       ],
     },
     teach: teachCardsFor(chars),
-    exercises: [
-      {
-        id: `${id}-read`,
-        kind: "multiple-choice",
-        skill: "read",
-        prompt: `Read: which kana is '${chars[i0].romaji}'?`,
-        promptJa: `読む：「${chars[i0].romaji}」はどれ？`,
-        choices: choicesFrom(chars, readOrder),
-        correctChoiceId: correctIdFor(readOrder, i0),
-        explanationEn: `${chars[i0].kana} = ${chars[i0].romaji}.`,
-        explanationJa: `${chars[i0].kana} = ${chars[i0].romaji} です。`,
-      },
-      {
-        id: `${id}-write`,
-        kind: "write-choice",
-        skill: "write",
-        prompt: `Write: which kana is '${chars[i1].romaji}'?`,
-        promptJa: `書く：「${chars[i1].romaji}」はどれ？`,
-        choices: choicesFrom(chars, writeOrder),
-        correctChoiceId: correctIdFor(writeOrder, i1),
-        strokeGlyph: chars[i1].kana,
-        explanationEn: `${chars[i1].kana} = ${chars[i1].romaji}.`,
-        explanationJa: `${chars[i1].kana} = ${chars[i1].romaji} です。`,
-      },
-      {
-        id: `${id}-speak`,
-        kind: "speak-prompt",
-        skill: "speak",
-        prompt: `Speak: say ${chars[i2].kana} (${chars[i2].romaji}).`,
-        promptJa: `話す：${chars[i2].kana}（${chars[i2].romaji}）と言ってください。`,
-        ttsText: chars[i2].kana,
-        ttsLang: "ja-JP",
-        expectedSpeech: [chars[i2].kana, chars[i2].romaji],
-        explanationEn: `${chars[i2].kana} = ${chars[i2].romaji}.`,
-        explanationJa: `${chars[i2].kana} = ${chars[i2].romaji} です。`,
-      },
-      {
-        id: `${id}-listen`,
-        kind: "listen-choice",
-        skill: "listen",
-        prompt: "Listen: which kana do you hear?",
-        promptJa: "聞く：聞こえたかなは？",
-        ttsText: chars[iLast].kana,
-        ttsLang: "ja-JP",
-        choices: choicesFrom(chars, listenOrder),
-        correctChoiceId: correctIdFor(listenOrder, iLast),
-        explanationEn: `You heard ${chars[iLast].kana} (${chars[iLast].romaji}).`,
-        explanationJa: `${chars[iLast].kana}（${chars[iLast].romaji}）が聞こえました。`,
-      },
-      {
-        id: `${id}-write2`,
-        kind: "write-choice",
-        skill: "write",
-        prompt: `Write: choose ${chars[iLast].kana} (${chars[iLast].romaji}).`,
-        promptJa: `書く：${chars[iLast].kana}（${chars[iLast].romaji}）を選ぶ。`,
-        choices: choicesFrom(chars, write2Order),
-        correctChoiceId: correctIdFor(write2Order, iLast),
-        explanationEn: `${chars[iLast].kana} = ${chars[iLast].romaji}.`,
-        explanationJa: `${chars[iLast].kana} = ${chars[iLast].romaji} です。`,
-      },
-    ],
+    exercises,
   };
 }
 

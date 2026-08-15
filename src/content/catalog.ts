@@ -798,9 +798,9 @@ export const pathMeta = {
     title: "Japanese Quest",
     titleJa: "日本語クエスト",
     blurb:
-      "Speak and read from day one: move kana and kanji tiles into real sentences, then climb from furigana stories to workplace email and news.",
+      "First learn the letters — hiragana, katakana, and kanji — with romaji hidden. Then build sentences and climb to workplace reading.",
     blurbJa:
-      "初日から話す・読む。かなと漢字のタイルで文を組み立て、ふりがな物語から仕事のメール・ニュースまで。",
+      "まず文字。ひらがな・カタカナ・漢字を、ローマ字を隠して覚える。それから文を組み立て、仕事の読解へ。",
     cta: "Continue Japanese path",
     ctaJa: "日本語コースへ",
     unitId: japaneseWelcomeUnit.id,

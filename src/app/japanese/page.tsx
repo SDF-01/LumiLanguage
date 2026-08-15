@@ -70,6 +70,19 @@ export default function JapanesePathPage() {
           <p className="text-center text-xs font-bold text-[var(--brand-primary-deep)]">
             {stats.done}/{stats.total} · {stats.percent}%
           </p>
+          <Link href="/japanese/chart">
+            <SoftPanel accent="sun" className="flex flex-col gap-1">
+              <p className="text-[10px] font-bold uppercase text-[var(--brand-coral)]">
+                {t.japanese.nav.chart}
+              </p>
+              <p className="font-display text-lg font-semibold text-[var(--brand-primary-deep)]">
+                {t.japanese.alpha.title}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {t.japanese.alpha.subtitle}
+              </p>
+            </SoftPanel>
+          </Link>
           <div className="grid grid-cols-2 gap-2">
             <LabLink href={`/japanese/unit/${nextId}`} label={t.japanese.continuePath} />
             <LabLink href="/japanese/build" label={t.japanese.readWorkshopCta} />

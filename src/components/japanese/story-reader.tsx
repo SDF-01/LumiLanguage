@@ -138,6 +138,7 @@ export function StoryReader({ story }: { story: GradedStory }) {
               trayLabel={t.japanese.buildTray}
               bankLabel={t.japanese.buildBank}
               emptyLabel={t.japanese.buildEmpty}
+              hideReadings={Boolean(exercise.hideReadings)}
             />
           ) : (
             <div className="flex flex-col gap-2">

@@ -46,6 +46,7 @@ export function SentenceBuilder({
   trayLabel,
   bankLabel,
   emptyLabel,
+  hideReadings = false,
 }: {
   tiles: SentenceTile[];
   correctOrder: string[];
@@ -56,6 +57,7 @@ export function SentenceBuilder({
   trayLabel: string;
   bankLabel: string;
   emptyLabel: string;
+  hideReadings?: boolean;
 }) {
   const initialBank = useMemo(() => shuffle(tiles), [tiles]);
   const [bank, setBank] = useState<SentenceTile[]>(initialBank);
@@ -140,7 +142,7 @@ export function SentenceBuilder({
                 className={`pressable min-h-12 rounded-xl border-2 px-2.5 font-jp text-lg font-semibold ${scriptTone(tile.script)}`}
               >
                 {tile.label}
-                {tile.reading && (
+                {!hideReadings && tile.reading && (
                   <span className="mt-0.5 block text-[10px] font-bold opacity-70">
                     {tile.reading}
                   </span>
@@ -185,7 +187,7 @@ export function SentenceBuilder({
               className={`pressable min-h-12 rounded-xl border-2 px-2.5 font-jp text-lg font-semibold ${scriptTone(tile.script)}`}
             >
               {tile.label}
-              {tile.reading && (
+              {!hideReadings && tile.reading && (
                 <span className="mt-0.5 block text-[10px] font-bold opacity-70">
                   {tile.reading}
                 </span>

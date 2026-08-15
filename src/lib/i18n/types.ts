@@ -110,6 +110,22 @@ export type Dictionary = {
       dakuten: string;
       youon: string;
     };
+    alpha: {
+      title: string;
+      subtitle: string;
+      learn: string;
+      drill: string;
+      twins: string;
+      reveal: string;
+      hideHint: string;
+      mastered: string;
+      noRomaji: string;
+      studyHint: string;
+      showVoiced: string;
+      hideVoiced: string;
+      correct: string;
+      finishRound: string;
+    };
   };
   common: {
     readyToPlay: string;

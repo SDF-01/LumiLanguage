@@ -69,6 +69,7 @@ export default function SentenceWorkshopPage() {
           trayLabel={t.japanese.buildTray}
           bankLabel={t.japanese.buildBank}
           emptyLabel={t.japanese.buildEmpty}
+          hideReadings={Boolean(exercise.hideReadings)}
         />
         {revealed && (
           <div

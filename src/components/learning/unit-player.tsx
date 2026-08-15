@@ -543,6 +543,7 @@ function ExerciseView({
             trayLabel={trayLabel}
             bankLabel={bankLabel}
             emptyLabel={emptyLabel}
+            hideReadings={Boolean(exercise.hideReadings)}
           />
         )}
 

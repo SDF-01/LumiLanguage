@@ -15,6 +15,7 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 - **Sentence build** — tap hiragana / katakana / kanji / particle tiles into SOV order from an English prompt. Color shows each script's job.
 - **Reading ladder** — kana sentences → mixed-script N5 → workplace email, news headlines, meeting frames.
 - **Furigana fade** — stories start with readings on; workplace mail defaults off.
+- **Letter school** (`/japanese/chart`) — hiragana, katakana, and 50 first kanji. Romaji stays hidden until reveal. Recall drills and lookalike twins (ね/れ/わ, シ/ツ/ン). Three clean recalls = mastered.
 
 ## Path order (from zero)
 
@@ -35,7 +36,7 @@ Speak-and-read first. Teach before quiz. Android-first labs sit beside the quest
 | Speak | `/japanese/speak` | Shadow drills + dialogues |
 | Read | `/japanese/read` | Ladder + workshop + graded stories |
 | Review | `/japanese/review` | Spaced repetition |
-| Chart | `/japanese/chart` | 五十音図 |
+| Letters | `/japanese/chart` | Hiragana / katakana / kanji school |
 
 Workshop: `/japanese/build` — free practice of every sentence-build item.
 

@@ -2,6 +2,7 @@ import { createSentenceUnit } from "@/content/japanese/sentence-factory";
 
 export const japaneseProEmailUnit = createSentenceUnit({
   id: "jp-pro-email",
+  hideReadings: true,
   title: "Read a work email",
   titleJa: "仕事のメールを読む",
   subtitle: "Build the lines of a polite office message",
@@ -111,6 +112,7 @@ export const japaneseProEmailUnit = createSentenceUnit({
 
 export const japaneseProNewsUnit = createSentenceUnit({
   id: "jp-pro-news",
+  hideReadings: true,
   title: "Read a news headline",
   titleJa: "ニュースの見出し",
   subtitle: "Headlines drop particles — you still rebuild the full sentence",
@@ -209,6 +211,7 @@ export const japaneseProNewsUnit = createSentenceUnit({
 
 export const japaneseProMeetingUnit = createSentenceUnit({
   id: "jp-pro-meeting",
+  hideReadings: true,
   title: "Read a meeting line",
   titleJa: "会議の一言",
   subtitle: "Assemble the phrases you will see on slides and minutes",

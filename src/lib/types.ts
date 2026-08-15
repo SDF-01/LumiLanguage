@@ -56,6 +56,8 @@ export interface Exercise {
   tiles?: SentenceTile[];
   /** Correct tile id order for sentence-build. */
   correctOrder?: string[];
+  /** Hide furigana on tiles so the learner must recognize the script. */
+  hideReadings?: boolean;
 }
 
 export interface TutorialBlock {

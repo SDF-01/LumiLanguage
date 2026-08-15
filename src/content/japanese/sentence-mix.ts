@@ -16,6 +16,7 @@ export const japaneseSentenceMixUnit = createSentenceUnit({
     "Hiragana = endings and particles",
     "Katakana = foreign / emphasized words",
   ],
+  hideReadings: true,
   teach: [
     {
       glyph: "私／コーヒー／を",

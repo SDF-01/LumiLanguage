@@ -498,6 +498,7 @@ export const japaneseStories: GradedStory[] = [
           { id: "wa", label: "は", script: "particle" },
         ],
         correctOrder: ["tenpu", "file", "o", "go", "kakunin", "kudasai"],
+        hideReadings: true,
         explanationEn: "ご + 確認 + ください is the polite inbox request.",
         explanationJa: "ご確認ください が丁寧な依頼。",
       },

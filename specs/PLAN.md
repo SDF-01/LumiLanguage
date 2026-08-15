@@ -16,6 +16,7 @@ Android-first beginner Japanese that teaches speaking and reading for real, not 
 10. **Android APK** — Capacitor wrap + signed sideload package at `/get-app` and `public/downloads/lumi-japanese.apk`
 11. **Sentence workshop** — tap-to-place hiragana / katakana / kanji tiles into SOV sentences
 12. **Reading ladder** — graded stories plus workplace email / news / meeting units toward professional reading
+13. **Letter school** — dedicated hiragana / katakana / kanji dojo with hidden romaji, lookalike twins, and mastery
 
 ## Prior waves (done)
 

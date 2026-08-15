@@ -26,6 +26,7 @@ export type SentenceItem = {
   }>;
   explainEn: string;
   explainJa: string;
+  hideReadings?: boolean;
 };
 
 export function toTiles(
@@ -46,6 +47,7 @@ export function sentenceExercise(item: SentenceItem): Exercise {
     ttsLang: "ja-JP",
     tiles: toTiles(item.tiles, item.extra),
     correctOrder: item.order,
+    hideReadings: item.hideReadings,
     explanationEn: item.explainEn,
     explanationJa: item.explainJa,
   };
@@ -64,6 +66,7 @@ export function createSentenceUnit(options: {
   teach: TeachCard[];
   items: SentenceItem[];
   xpReward?: number;
+  hideReadings?: boolean;
 }): LearningUnit {
   return {
     id: options.id,
@@ -80,6 +83,11 @@ export function createSentenceUnit(options: {
       tips: options.tips,
     },
     teach: options.teach,
-    exercises: options.items.map(sentenceExercise),
+    exercises: options.items.map((item) =>
+      sentenceExercise({
+        ...item,
+        hideReadings: item.hideReadings ?? options.hideReadings,
+      }),
+    ),
   };
 }

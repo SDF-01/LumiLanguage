@@ -1,5 +1,10 @@
 import { useSyncExternalStore } from "react";
 import {
+  loadAlphabetMastery,
+  subscribeAlphabetMastery,
+  type GlyphMastery,
+} from "@/lib/alphabet-mastery";
+import {
   getServerProgress,
   loadProgress,
   subscribeProgress,
@@ -18,6 +23,14 @@ export function useProgress(): ProgressState {
 
 export function useSrsCards(): SrsCard[] {
   return useSyncExternalStore(subscribeSrs, loadSrs, () => []);
+}
+
+export function useAlphabetMastery(): Record<string, GlyphMastery> {
+  return useSyncExternalStore(
+    subscribeAlphabetMastery,
+    loadAlphabetMastery,
+    () => ({}),
+  );
 }
 
 export function useSpeechRecognitionSupport(): boolean {
