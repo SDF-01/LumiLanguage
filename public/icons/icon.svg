@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#40C8C8"/>
+  <circle cx="256" cy="230" r="118" fill="#EAF7FB"/>
+  <circle cx="214" cy="218" r="22" fill="#1F2A37"/>
+  <circle cx="298" cy="218" r="22" fill="#1F2A37"/>
+  <ellipse cx="256" cy="268" rx="18" ry="14" fill="#FF7A59"/>
+  <text x="256" y="430" text-anchor="middle" font-size="92" font-family="Fredoka, Nunito, sans-serif" fill="#FFFFFF" font-weight="700">B</text>
+</svg>

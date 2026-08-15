@@ -1,20 +1,19 @@
-# Plan — LumiLanguage 10-phase TOEIC enhancement
+# Plan — LumiLanguage Japanese speak & read wave
 
-Teach-first dual path. This wave completes the TOEIC curriculum phases from `toeic-from-scratch-plan.md`.
+Android-first beginner Japanese that teaches speaking and reading for real, not tap-only tiles.
 
-## Ten phases (this ship)
+## This ship
 
-1. **START HERE (E0–E3)** — Phrases, English sounds, word systems, bridge into vocab (Learn before quiz).
-2. **A1 Numbers / dates / time** — `toeic-vocab-numbers`
-3. **A2 People & jobs** — `toeic-vocab-people`
-4. **A3–A4 Office + Travel** — existing, now with Learn cards
-5. **A5 Dining & shopping** — `toeic-vocab-dining`
-6. **A6 HR & meetings** — `toeic-vocab-hr`
-7. **A7 Finance** — `toeic-vocab-finance`
-8. **B1–B3 Grammar packs** — word forms, prepositions, conjunctions (Learn + Part 5 drills)
-9. **Part 7 double passages** — cross-text unit `toeic-r7-double-passage`
-10. **Exam sim + gates** — timed quiz 20 items / 300s; Listening unlocks after V1+V2+R0; exam Reading after L1
+1. **Mic coach** — `ja-JP` speech recognition + fuzzy kana/romaji scoring
+2. **Stroke pad** — finger writing on teach/write steps and the 五十音図
+3. **Speak Life path** — self-intro, numbers, family, food, shopping, daily life, weather
+4. **Reading lab** — 3 furigana stories with shadowing and checks
+5. **Dialogue lab** — first meeting, cafe, asking the time
+6. **SRS review** — missed lines return on a schedule
+7. **Kana chart** — full gojuon + dakuten + youon
+8. **PWA** — install to Android home screen, bottom nav, haptics
+9. **Gates** — sequential unlock, but life speaking opens after First phrases
 
 ## Prior waves (done)
 
-- TTS single female voice, landing polish, Japanese alphabet teach step, content depth, Words of the Day glosses, aesthetic pass.
+- TTS female voice, landing polish, Japanese alphabet teach step, TOEIC 10-phase path, Words of the Day, aesthetic pass.

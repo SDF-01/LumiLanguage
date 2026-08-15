@@ -3,7 +3,7 @@
 Friendly, mobile-first language adventure with two paths — learn with Lumi the owl.
 
 1. **TOEIC 800+** — for Japanese learners (Listening/Reading criteria, EN→JP explainers, practice exam)
-2. **Japanese Quest** — for English speakers (elementary → advanced; MVP slice: hiragana あ行)
+2. **Japanese Quest** — speak and read from zero: mic coaching, stroke writing, furigana stories, 五十音図, and everyday life lines (Android PWA)
 
 ## Stack
 

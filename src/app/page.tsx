@@ -82,6 +82,13 @@ export default function HomePage() {
             asChild
             className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
           >
+            <Link href="/japanese">{t.home.speakReadCta}</Link>
+          </Button>
+          <Button
+            asChild
+            variant="secondary"
+            className="pressable min-h-12 w-full rounded-2xl border-2 border-[var(--brand-border)] bg-white/85 text-sm font-bold text-[var(--brand-primary-deep)] backdrop-blur-sm"
+          >
             <Link href="/paths">{t.home.startLearning}</Link>
           </Button>
           <Button

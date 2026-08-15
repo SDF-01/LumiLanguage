@@ -26,12 +26,16 @@ const jp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: `${brand.name} | ${brand.tagline}`,
+  title: `${brand.name} | Speak & read Japanese`,
   description: brand.description,
+  applicationName: brand.name,
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: brand.name,
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
   },
 };
 

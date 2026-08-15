@@ -12,6 +12,7 @@ export function skillFromKind(kind: ExerciseKind): SkillFocus {
     case "speak-prompt":
       return "speak";
     case "write-choice":
+    case "stroke-write":
       return "write";
     case "multiple-choice":
     case "match":

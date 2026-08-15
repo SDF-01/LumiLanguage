@@ -35,7 +35,10 @@ function StarIcon() {
 
 function isLearningRoute(pathname: string): boolean {
   if (pathname === "/toeic" || pathname === "/japanese") return true;
-  return pathname.startsWith("/toeic/") || pathname.startsWith("/japanese/");
+  return (
+    pathname.startsWith("/toeic/") ||
+    pathname.startsWith("/japanese/")
+  );
 }
 
 function LanguageSelector() {

@@ -47,6 +47,15 @@ import {
 } from "@/content/japanese/katakana-lines";
 import { japaneseKatakanaBridgeUnit } from "@/content/japanese/katakana-bridge";
 import { japaneseParticlesUnit } from "@/content/japanese/particles";
+import { japaneseSelfIntroUnit } from "@/content/japanese/self-intro";
+import { japaneseNumbersSpeakUnit } from "@/content/japanese/numbers";
+import { japaneseFamilyUnit } from "@/content/japanese/family";
+import { japaneseFoodUnit } from "@/content/japanese/food";
+import { japaneseShoppingUnit } from "@/content/japanese/shopping";
+import { japaneseDailyLifeUnit } from "@/content/japanese/daily-life";
+import { japaneseWeatherUnit } from "@/content/japanese/weather";
+import { japaneseKatakanaYouonUnit } from "@/content/japanese/katakana-youon";
+import { japaneseKanjiPeopleUnit } from "@/content/japanese/kanji-people";
 import { toeicBridgeUnit } from "@/content/toeic/foundations-bridge";
 import { toeicSoundsUnit } from "@/content/toeic/foundations-sounds";
 import { toeicWelcomeUnit } from "@/content/toeic/foundations-welcome";
@@ -132,11 +141,20 @@ const units: LearningUnit[] = [
   japaneseKatakanaDaUnit,
   japaneseKatakanaBaUnit,
   japaneseKatakanaPaUnit,
+  japaneseKatakanaYouonUnit,
   japaneseKanjiBasicsUnit,
   japaneseKanjiNatureUnit,
   japaneseKanjiNumbersTimeUnit,
+  japaneseKanjiPeopleUnit,
   japaneseGreetingsUnit,
   japaneseParticlesUnit,
+  japaneseSelfIntroUnit,
+  japaneseNumbersSpeakUnit,
+  japaneseFamilyUnit,
+  japaneseFoodUnit,
+  japaneseShoppingUnit,
+  japaneseDailyLifeUnit,
+  japaneseWeatherUnit,
 ];
 
 export function getUnit(unitId: string): LearningUnit | undefined {
@@ -184,7 +202,8 @@ export type PathSection =
   | "hiragana"
   | "katakana"
   | "kanji"
-  | "phrases";
+  | "phrases"
+  | "life";
 
 export type PathNode = {
   id: string;
@@ -192,6 +211,7 @@ export type PathNode = {
   labelJa: string;
   unitId: string;
   section: PathSection;
+  href?: string;
 };
 
 export const toeicPathNodes: PathNode[] = [
@@ -612,6 +632,13 @@ export const japanesePathNodes: PathNode[] = [
     section: "katakana",
   },
   {
+    id: "K16",
+    label: "Learn + practice: katakana youon",
+    labelJa: "覚える＋練習：カタカナ拗音",
+    unitId: japaneseKatakanaYouonUnit.id,
+    section: "katakana",
+  },
+  {
     id: "C1",
     label: "Kanji basics",
     labelJa: "漢字入門",
@@ -633,6 +660,13 @@ export const japanesePathNodes: PathNode[] = [
     section: "kanji",
   },
   {
+    id: "C4",
+    label: "Kanji: people",
+    labelJa: "漢字：人",
+    unitId: japaneseKanjiPeopleUnit.id,
+    section: "kanji",
+  },
+  {
     id: "P1",
     label: "Greetings",
     labelJa: "あいさつ",
@@ -645,6 +679,55 @@ export const japanesePathNodes: PathNode[] = [
     labelJa: "助詞 は・を・に",
     unitId: japaneseParticlesUnit.id,
     section: "phrases",
+  },
+  {
+    id: "L1",
+    label: "Speak: self-introduction",
+    labelJa: "話す：自己紹介",
+    unitId: japaneseSelfIntroUnit.id,
+    section: "life",
+  },
+  {
+    id: "L2",
+    label: "Speak: numbers and prices",
+    labelJa: "話す：数字と値段",
+    unitId: japaneseNumbersSpeakUnit.id,
+    section: "life",
+  },
+  {
+    id: "L3",
+    label: "Speak: family",
+    labelJa: "話す：家族",
+    unitId: japaneseFamilyUnit.id,
+    section: "life",
+  },
+  {
+    id: "L4",
+    label: "Speak: food and drink",
+    labelJa: "話す：食べ物・飲み物",
+    unitId: japaneseFoodUnit.id,
+    section: "life",
+  },
+  {
+    id: "L5",
+    label: "Speak: shopping",
+    labelJa: "話す：買い物",
+    unitId: japaneseShoppingUnit.id,
+    section: "life",
+  },
+  {
+    id: "L6",
+    label: "Speak: daily life",
+    labelJa: "話す：毎日",
+    unitId: japaneseDailyLifeUnit.id,
+    section: "life",
+  },
+  {
+    id: "L7",
+    label: "Speak: weather small talk",
+    labelJa: "話す：天気の雑談",
+    unitId: japaneseWeatherUnit.id,
+    section: "life",
   },
 ];
 
@@ -666,9 +749,9 @@ export const pathMeta = {
     title: "Japanese Quest",
     titleJa: "日本語クエスト",
     blurb:
-      "Learn the alphabet before quizzes: each kana lesson teaches letters with audio first, then a short practice. Hiragana, katakana, kanji, and phrases.",
+      "Speak and read from day one: real mic coaching, stroke writing, furigana stories, and teach-first kana. Everyday Japanese — not tap-only tiles.",
     blurbJa:
-      "クイズの前に文字を教えます。各かなレッスンは音声つきで覚えてから短い練習へ。ひらがな・カタカナ・漢字・フレーズ。",
+      "初日から話す・読む。音声認識、なぞり書き、ふりがな物語、先に教えるかな。タップだけの問題ではありません。",
     cta: "Continue Japanese path",
     ctaJa: "日本語コースへ",
     unitId: japaneseWelcomeUnit.id,

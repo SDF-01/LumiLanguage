@@ -92,6 +92,7 @@ export const japaneseGreetingsUnit: LearningUnit = {
       promptJa: "ありがとう と言ってみましょう。",
       ttsText: "ありがとう",
       ttsLang: "ja-JP",
+      expectedSpeech: ["ありがとう", "arigatou", "arigato"],
       explanationEn: "ありがとう is a casual thank you among friends.",
       explanationJa: "ありがとうはカジュアルな感謝の言葉です。",
     },

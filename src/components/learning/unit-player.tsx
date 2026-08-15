@@ -1,14 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AudioButton } from "@/components/learning/audio-button";
+import { MatchBoard } from "@/components/japanese/match-board";
+import { PitchBar } from "@/components/japanese/pitch-bar";
+import { SpeakCoach } from "@/components/japanese/speak-coach";
+import { StrokePad } from "@/components/japanese/stroke-pad";
 import { LumiMascot } from "@/components/brand/lumi-mascot";
 import { SoftPanel } from "@/components/brand/soft-panel";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { completeUnit } from "@/lib/progress";
+import { useSpeechRecognitionSupport } from "@/lib/client-store";
+import { addSkillXp, completeUnit, markJapaneseUnit } from "@/lib/progress";
+import { haptic } from "@/lib/haptics";
+import { type SpeechScore } from "@/lib/speech";
+import { queueFromExercise } from "@/lib/srs";
 import type { Exercise, LearningUnit, TeachCard } from "@/lib/types";
 import { skillForExercise, skillLabel } from "@/lib/skills";
 import { unlockAudio, type TtsLang } from "@/lib/tts";
@@ -18,7 +26,7 @@ type Phase = "tutorial" | "teach" | "exercise" | "checkpoint";
 
 export function UnitPlayer({ unit }: { unit: LearningUnit }) {
   const router = useRouter();
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const teachCards = unit.teach ?? [];
   const hasTeach = teachCards.length > 0;
 
@@ -30,11 +38,16 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
   const [correctCount, setCorrectCount] = useState(0);
   const [earnedXp, setEarnedXp] = useState(0);
   const [justWrong, setJustWrong] = useState(false);
+  const speechReady = useSpeechRecognitionSupport();
 
   const exercise = unit.exercises[index];
   const total = unit.exercises.length;
   const teachTotal = teachCards.length;
   const teachCard = teachCards[teachIndex];
+
+  useEffect(() => {
+    if (unit.pathId === "japanese") markJapaneseUnit(unit.id);
+  }, [unit.id, unit.pathId]);
 
   const progressValue = useMemo(() => {
     if (phase === "tutorial") return 6;
@@ -79,20 +92,32 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
     setTeachIndex((i) => i + 1);
   }
 
+  function finishItem(ok: boolean) {
+    setRevealed(true);
+    setJustWrong(!ok);
+    haptic(ok ? "ok" : "bad");
+    if (ok) {
+      setCorrectCount((c) => c + 1);
+      if (exercise) addSkillXp(skillForExercise(exercise), 8);
+    } else if (exercise && unit.pathId === "japanese") {
+      queueFromExercise(exercise);
+    }
+  }
+
   function submitChoice(choiceId: string) {
     if (revealed || !exercise) return;
     setSelected(choiceId);
-    setRevealed(true);
-    const ok = exercise.correctChoiceId === choiceId;
-    setJustWrong(!ok);
-    if (ok) setCorrectCount((c) => c + 1);
+    finishItem(exercise.correctChoiceId === choiceId);
   }
 
   function continueSpeak() {
     if (!exercise) return;
-    setRevealed(true);
-    setJustWrong(false);
-    setCorrectCount((c) => c + 1);
+    finishItem(true);
+  }
+
+  function onSpeakScore(score: SpeechScore) {
+    if (revealed) return;
+    finishItem(score.passed);
   }
 
   function next() {
@@ -162,10 +187,10 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
               {locale === "ja"
                 ? unit.pathId === "toeic"
                   ? "次は Learn：英語を1つずつ音声つきで教えます。クイズはそのあとです。"
-                  : "次は Learn：文字を1つずつ音声つきで教えます。クイズはそのあとです。"
+                  : "次は Learn：文字とフレーズを1つずつ音声つきで教えます。クイズはそのあとです。"
                 : unit.pathId === "toeic"
                   ? "Next is Learn: we teach each English item with audio. The quiz comes after."
-                  : "Next is Learn: we teach each letter with audio. The quiz comes after."}
+                  : "Next is Learn: we teach each item with audio. Then you speak, write, and read."}
             </p>
           )}
           {unit.tutorial.tips && (
@@ -199,6 +224,12 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           revealed={revealed}
           justWrong={justWrong}
           onSelect={submitChoice}
+          onSpeak={onSpeakScore}
+          onStroke={(ok) => finishItem(ok)}
+          onMatch={() => finishItem(true)}
+          listenLabel={t.japanese.listening}
+          speakLabel={t.japanese.tapToSpeak}
+          locale={locale}
         />
       )}
 
@@ -217,7 +248,7 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
           <p className="text-base text-muted-foreground">
             {unit.pathId === "toeic"
               ? `Nice work on ${unit.title}. Ready for a quick timed quiz?`
-              : `${unit.title} complete. Come back tomorrow and keep the streak!`}
+              : `${unit.title} complete. Review weak lines in the Review tab.`}
           </p>
           <div className="flex w-full flex-col gap-2 pt-2">
             {unit.pathId === "toeic" && (
@@ -226,6 +257,14 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
                 className="pressable soft-shadow min-h-14 rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
               >
                 <Link href="/toeic/exam">Try practice quiz</Link>
+              </Button>
+            )}
+            {unit.pathId === "japanese" && (
+              <Button
+                asChild
+                className="pressable soft-shadow min-h-14 rounded-2xl border-0 bg-[var(--brand-coral)] text-base font-bold text-white"
+              >
+                <Link href="/japanese/speak">Open speaking lab</Link>
               </Button>
             )}
             <Button
@@ -248,8 +287,8 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
             >
               {hasTeach
                 ? locale === "ja"
-                  ? "文字を覚える"
-                  : "Learn the letters"
+                  ? "先に覚える"
+                  : "Learn first"
                 : "Let's go"}
             </Button>
           )}
@@ -260,11 +299,11 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
             >
               {teachIndex + 1 >= teachTotal
                 ? locale === "ja"
-                  ? "練習クイズへ"
-                  : "Start practice quiz"
+                  ? "練習へ"
+                  : "Start practice"
                 : locale === "ja"
-                  ? "次の文字"
-                  : "Next letter"}
+                  ? "次へ"
+                  : "Next"}
             </Button>
           )}
           {phase === "exercise" && revealed && (
@@ -272,12 +311,13 @@ export function UnitPlayer({ unit }: { unit: LearningUnit }) {
               className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
               onClick={next}
             >
-              {index + 1 >= total ? "Claim XP" : "Continue"}
+              {index + 1 >= total ? "Claim XP" : t.common.continue}
             </Button>
           )}
           {phase === "exercise" &&
             !revealed &&
-            exercise?.kind === "speak-prompt" && (
+            exercise?.kind === "speak-prompt" &&
+            !speechReady && (
               <Button
                 className="pressable soft-shadow min-h-14 w-full rounded-2xl border-0 bg-[var(--brand-primary)] text-base font-bold text-white hover:bg-[var(--brand-primary-deep)]"
                 onClick={continueSpeak}
@@ -329,15 +369,18 @@ function TeachView({
           aria-hidden
           className="absolute inset-x-8 top-2 h-28 rounded-full bg-[radial-gradient(circle,rgba(64,200,200,0.2),transparent_70%)]"
         />
-        <p className="font-jp relative text-7xl font-semibold leading-none text-[var(--brand-primary-deep)] sm:text-8xl">
+        <p className="font-jp relative text-6xl font-semibold leading-none text-[var(--brand-primary-deep)] sm:text-7xl">
           {card.glyph}
         </p>
         <p className="font-display relative text-2xl font-semibold tracking-wide text-[var(--brand-coral)]">
           {card.reading}
         </p>
-        <p className="relative text-sm font-medium text-muted-foreground">
-          {locale === "ja" ? "ローマ字の読み" : "Romaji spelling"}
-        </p>
+        {(card.meaningEn || card.meaningJa) && (
+          <p className="relative text-sm font-bold text-[var(--brand-ink)]">
+            {locale === "ja" ? card.meaningJa ?? card.meaningEn : card.meaningEn}
+          </p>
+        )}
+        <PitchBar pattern={card.pitch} />
       </div>
 
       <p className="text-base leading-relaxed">
@@ -361,8 +404,8 @@ function TeachView({
         <LumiMascot size={56} mood="think" />
         <p className="pt-1 text-sm font-medium leading-relaxed text-[var(--brand-primary-deep)]">
           {locale === "ja"
-            ? "形を目で覚え、Listen で音を確認してから次へ。"
-            : "Look at the shape, tap Listen, say it once, then go to the next letter."}
+            ? "形を目で覚え、Listen で音を確認し、声に出してから次へ。"
+            : "Look, tap Listen, say it once, then go to the next card."}
         </p>
       </div>
     </SoftPanel>
@@ -375,12 +418,24 @@ function ExerciseView({
   revealed,
   justWrong,
   onSelect,
+  onSpeak,
+  onStroke,
+  onMatch,
+  listenLabel,
+  speakLabel,
+  locale,
 }: {
   exercise: Exercise;
   selected: string | null;
   revealed: boolean;
   justWrong: boolean;
   onSelect: (id: string) => void;
+  onSpeak: (score: SpeechScore) => void;
+  onStroke: (ok: boolean) => void;
+  onMatch: () => void;
+  listenLabel: string;
+  speakLabel: string;
+  locale: "en" | "ja";
 }) {
   const lang = (exercise.ttsLang ?? "en-US") as TtsLang;
 
@@ -410,6 +465,39 @@ function ExerciseView({
         exercise.ttsText && (
           <AudioButton text={exercise.ttsText} lang={lang} label="Listen" />
         )}
+
+      {exercise.kind === "speak-prompt" && !revealed && (
+        <SpeakCoach
+          expected={
+            exercise.expectedSpeech ??
+            [exercise.ttsText, exercise.prompt].filter(
+              (value): value is string => Boolean(value),
+            )
+          }
+          listenLabel={listenLabel}
+          speakLabel={speakLabel}
+          onResult={onSpeak}
+        />
+      )}
+
+      {exercise.kind === "stroke-write" && exercise.strokeGlyph && (
+        <StrokePad
+          glyph={exercise.strokeGlyph}
+          checkLabel={locale === "ja" ? "チェック" : "Check"}
+          clearLabel={locale === "ja" ? "消す" : "Clear"}
+          onPass={() => onStroke(true)}
+          onFail={() => onStroke(false)}
+          disabled={revealed}
+        />
+      )}
+
+      {exercise.kind === "match" && exercise.pairs && (
+        <MatchBoard
+          pairs={exercise.pairs}
+          revealed={revealed}
+          onComplete={onMatch}
+        />
+      )}
 
       {(exercise.kind === "multiple-choice" ||
         exercise.kind === "write-choice" ||
@@ -445,10 +533,14 @@ function ExerciseView({
           </div>
         )}
 
-      {exercise.kind === "speak-prompt" && !revealed && (
-        <p className="text-sm font-medium text-muted-foreground">
-          Say it out loud, then tap Continue. Lumi believes in you.
-        </p>
+      {exercise.kind === "write-choice" && exercise.strokeGlyph && !revealed && (
+        <StrokePad
+          glyph={exercise.strokeGlyph}
+          checkLabel={locale === "ja" ? "なぞりチェック" : "Trace check"}
+          clearLabel={locale === "ja" ? "消す" : "Clear"}
+          onPass={() => undefined}
+          onFail={() => undefined}
+        />
       )}
 
       {revealed && (

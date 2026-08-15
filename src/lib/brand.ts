@@ -8,5 +8,5 @@ export const brand = {
   mascot: "LUMI",
   tagline: "Learn with LUMI",
   description:
-    "Train for real TOEIC Listening and Reading toward 800+. Learn Japanese with hiragana, katakana, and kanji using read, write, speak, then listen, with LUMI the owl.",
+    "Speak and read beginner Japanese with real mic coaching, stroke writing, furigana stories, and teach-first kana. Also train TOEIC Listening and Reading toward 800+ with LUMI the owl.",
 } as const;
